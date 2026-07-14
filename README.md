@@ -64,9 +64,11 @@ The project is optimized for deployment on the [Vercel Platform](https://vercel.
 
 ---
 
-## 🔍 Search Engine Optimization (SEO)
+## 🔍 Search Engine Optimization (SEO) & AI Optimization (AISO)
 
-The app is built with SEO best practices:
+The app is built with modern search and discovery practices:
+* **AI Search Optimization (GEO/AISO)**: Integrates an [llms.txt](file:///c:/Users/ROSHAN%20ROY/Desktop/resume_checker/public/llms.txt) file at the root to declare capabilities directly to LLM crawlers (like Perplexity, ChatGPT Search, Gemini, and Claude).
 * **JSON-LD Structured Data**: Includes schemas in the head representing the app as a `SoftwareApplication` and a `WebSite` containing a Google `SearchAction` (enables Google Sitelinks Search Box features).
-* **Robots & Sitemap**: Statically exports `/sitemap.xml` and `/robots.txt` upon production compilation for search crawlers.
+* **Robots & Sitemap**: Statically exports `/sitemap.xml` and `/robots.txt` upon production compilation for standard crawlers.
 * **Metadata**: Full OpenGraph and Twitter card attributes are pre-configured in the layout shell.
+
