@@ -18,7 +18,38 @@ import {
   Plus
 } from 'lucide-react';
 
-// Multi-Industry Prefilled Mock Data
+// Predefined dictionary of key skills across multiple domains for dynamic extraction
+const SKILLS_DICTIONARY = [
+  // Tech / Software
+  'react', 'next.js', 'nextjs', 'typescript', 'tailwind', 'graphql', 'restful api', 'restful apis', 'rest api', 'rest apis', 'docker', 'ci/cd', 'git', 'javascript', 'html', 'css', 'node.js', 'nodejs', 'python', 'java', 'sql', 'cloud', 'aws', 'kubernetes', 'c++', 'ruby', 'php', 'golang', 'frontend', 'backend', 'fullstack', 'database', 'mongodb', 'postgresql', 'software engineering', 'responsive design',
+  // Marketing & Sales
+  'seo', 'google ads', 'meta ads', 'email marketing', 'campaign', 'hubspot', 'salesforce', 'analytics', 'copywriting', 'content strategy', 'social media', 'growth hacking', 'user acquisition', 'b2b', 'lead generation', 'marketing strategy',
+  // Project Management & Business
+  'agile', 'scrum', 'csm', 'jira', 'confluence', 'risk management', 'budget oversight', 'stakeholder management', 'sprint planning', 'leadership', 'operations', 'project management', 'product management', 'business analysis',
+  // Healthcare & Medicine
+  'registered nurse', 'rn', 'patient assessment', 'triage care', 'emr', 'emr documentation', 'hipaa', 'cpr', 'bls', 'iv therapy', 'clinical', 'medication administration', 'crisis management', 'patient advocacy', 'healthcare', 'emergency department',
+  // General & Soft Skills
+  'communication', 'collaboration', 'problem solving', 'teamwork', 'critical thinking', 'time management', 'project coordination', 'risk assessment'
+];
+
+// Stopwords for generic text matching fallback
+const STOPWORDS = new Set([
+  'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any', 'are', 'arent', 'as', 'at',
+  'be', 'because', 'been', 'before', 'being', 'below', 'between', 'both', 'but', 'by', 'cant', 'cannot', 'could',
+  'couldnt', 'did', 'didnt', 'do', 'does', 'doesnt', 'doing', 'dont', 'down', 'during', 'each', 'few', 'for', 'from',
+  'further', 'had', 'hadnt', 'has', 'hasnt', 'have', 'havent', 'having', 'he', 'hed', 'hell', 'hes', 'her', 'here',
+  'heres', 'hers', 'herself', 'him', 'himself', 'his', 'how', 'hows', 'i', 'id', 'im', 'ive', 'if', 'in', 'into',
+  'is', 'isnt', 'it', 'its', 'itself', 'lets', 'me', 'more', 'most', 'mustnt', 'my', 'myself', 'no', 'nor', 'not',
+  'of', 'off', 'on', 'once', 'only', 'or', 'other', 'ought', 'our', 'ours', 'ourselves', 'out', 'over', 'own',
+  'same', 'shant', 'she', 'shed', 'shell', 'shes', 'should', 'shouldnt', 'so', 'some', 'such', 'than', 'that',
+  'thats', 'the', 'their', 'theirs', 'them', 'themselves', 'then', 'there', 'theres', 'these', 'they', 'theyd',
+  'theyll', 'theyre', 'theyve', 'this', 'those', 'through', 'to', 'too', 'under', 'until', 'up', 'very', 'was',
+  'wasnt', 'we', 'wed', 'well', 'were', 'weve', 'werent', 'what', 'whats', 'when', 'whens', 'where', 'wheres',
+  'which', 'while', 'who', 'whos', 'whom', 'why', 'whys', 'with', 'wont', 'would', 'wouldnt', 'you', 'youd',
+  'youll', 'youre', 'youve', 'your', 'yours', 'yourself', 'yourselves'
+]);
+
+// Multi-Industry Template Data (used as fallbacks/templates)
 const MOCK_DATA = {
   tech: {
     name: "Technology & Software Engineering",
@@ -37,15 +68,6 @@ Experience:
 - Collaborated with QA team to fix bugs.
 
 Skills: React, JavaScript, HTML, CSS, Git.`,
-    keywords: [
-      { text: 'Next.js', type: 'hard' },
-      { text: 'TypeScript', type: 'hard' },
-      { text: 'GraphQL', type: 'hard' },
-      { text: 'CI/CD Pipelines', type: 'tool' },
-      { text: 'Docker', type: 'tool' },
-      { text: 'RESTful APIs', type: 'hard' },
-      { text: 'Responsive Design', type: 'soft' }
-    ],
     bullets: [
       {
         id: 1,
@@ -65,8 +87,7 @@ Skills: React, JavaScript, HTML, CSS, Git.`,
         tailored: 'Collaborated across cross-functional engineering and QA teams, establishing CI/CD pipeline automation and Docker deployments to streamline release cycles.',
         reason: 'Demonstrates communication, CI/CD experience, and Docker usage as requested.'
       }
-    ],
-    score: 74
+    ]
   },
   marketing: {
     name: "Marketing & Growth Sales",
@@ -85,14 +106,6 @@ Experience:
 - Analyzed website traffic data.
 
 Skills: Marketing, Content Writing, SEO, Excel, Social Media.`,
-    keywords: [
-      { text: 'User Acquisition', type: 'hard' },
-      { text: 'Google Ads', type: 'hard' },
-      { text: 'Content Strategy', type: 'hard' },
-      { text: 'Google Analytics (GA4)', type: 'tool' },
-      { text: 'HubSpot / Salesforce', type: 'tool' },
-      { text: 'Copywriting', type: 'soft' }
-    ],
     bullets: [
       {
         id: 1,
@@ -112,8 +125,7 @@ Skills: Marketing, Content Writing, SEO, Excel, Social Media.`,
         tailored: 'Leveraged Google Analytics (GA4) and CRM dashboards to analyze campaign performance, cutting client acquisition costs by 15%.',
         reason: 'Directly targets Google Analytics and CRM tools requirement.'
       }
-    ],
-    score: 68
+    ]
   },
   management: {
     name: "Project Management & Leadership",
@@ -132,14 +144,6 @@ Experience:
 - Reported status updates to managers.
 
 Skills: Management, Excel, Jira, Communication, PowerPoint.`,
-    keywords: [
-      { text: 'Agile Methodology', type: 'hard' },
-      { text: 'Scrum Master', type: 'hard' },
-      { text: 'Risk Management', type: 'hard' },
-      { text: 'Jira Sprint Planning', type: 'tool' },
-      { text: 'Budget Oversight', type: 'hard' },
-      { text: 'Stakeholder Communication', type: 'soft' }
-    ],
     bullets: [
       {
         id: 1,
@@ -159,8 +163,7 @@ Skills: Management, Excel, Jira, Communication, PowerPoint.`,
         tailored: 'Created stakeholder reports and managed communications, keeping executive leadership informed on budget oversight and risk audits.',
         reason: 'Addresses stakeholder communication and risk management skills directly.'
       }
-    ],
-    score: 71
+    ]
   },
   healthcare: {
     name: "Healthcare & Registered Nursing",
@@ -179,14 +182,6 @@ Experience:
 - Handed out medications and helped doctor.
 
 Skills: Patient care, nursing, CPR, Microsoft Word.`,
-    keywords: [
-      { text: 'Patient Assessment', type: 'hard' },
-      { text: 'Triage Care', type: 'hard' },
-      { text: 'EMR Documentation', type: 'tool' },
-      { text: 'BLS Certification', type: 'hard' },
-      { text: 'Medication Administration', type: 'hard' },
-      { text: 'Crisis Management', type: 'soft' }
-    ],
     bullets: [
       {
         id: 1,
@@ -206,8 +201,7 @@ Skills: Patient care, nursing, CPR, Microsoft Word.`,
         tailored: 'Managed medication administration and IV therapy, collaborating with physicians during acute emergency crisis interventions.',
         reason: 'Highlights medication administration and crisis management requirements.'
       }
-    ],
-    score: 78
+    ]
   }
 };
 
@@ -218,17 +212,18 @@ export default function Home() {
   const [fileName, setFileName] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisCompleted, setAnalysisCompleted] = useState(false);
-  const [animatedScore, setAnimatedScore] = useState(0);
   const [copiedId, setCopiedId] = useState<number | null>(null);
   
   // Selected industry key for the loader
   const [industryKey, setIndustryKey] = useState<keyof typeof MOCK_DATA>('tech');
 
-  // Custom states for missing keywords and rewrites
-  const [keywords, setKeywords] = useState(MOCK_DATA.tech.keywords);
-  const [tailoredBullets, setTailoredBullets] = useState(MOCK_DATA.tech.bullets);
-  const [targetScore, setTargetScore] = useState(MOCK_DATA.tech.score);
-  
+  // Dynamic analysis states
+  const [score, setScore] = useState(0);
+  const [animatedScore, setAnimatedScore] = useState(0);
+  const [missingKeywords, setMissingKeywords] = useState<{text: string, type: string}[]>([]);
+  const [bullets, setBullets] = useState<{id: number, original: string, tailored: string, reason: string}[]>([]);
+
+  // Inline keyword editing
   const [newKeyword, setNewKeyword] = useState('');
   const [showAddKeyword, setShowAddKeyword] = useState(false);
 
@@ -237,9 +232,6 @@ export default function Home() {
     const data = MOCK_DATA[key];
     setJobDescription(data.jobDescription);
     setResumeContent(data.resumeContent);
-    setKeywords(data.keywords);
-    setTailoredBullets(data.bullets);
-    setTargetScore(data.score);
     setFileName(null);
     setActiveTab('paste');
     setAnalysisCompleted(false);
@@ -259,6 +251,44 @@ export default function Home() {
     }
   };
 
+  // Helper: Extract skills from text based on our dictionary
+  const extractSkills = (text: string): string[] => {
+    const cleanedText = ` ${text.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?\n\r]/g, " ")} `;
+    return SKILLS_DICTIONARY.filter(skill => {
+      // Use boundary spaces or words to avoid matching substrings (like "css" in "access")
+      const regex = new RegExp(`[\\s\\-\\(\\)]${skill.replace('.', '\\.')}[\\s\\-\\(\\),;\\.]`, 'i');
+      return regex.test(cleanedText);
+    });
+  };
+
+  // Helper: Compute word-overlap similarity if no skills match (Jaccard Index)
+  const computeWordOverlap = (jobText: string, resumeText: string): number => {
+    const getWords = (text: string) => {
+      const words = text.toLowerCase()
+        .replace(/[^\w\s]/g, '')
+        .split(/\s+/)
+        .filter(w => w.length > 3 && !STOPWORDS.has(w));
+      return new Set(words);
+    };
+
+    const jobWords = getWords(jobText);
+    const resumeWords = getWords(resumeText);
+
+    if (jobWords.size === 0) return 0;
+
+    // Intersection
+    let intersectionSize = 0;
+    jobWords.forEach(word => {
+      if (resumeWords.has(word)) {
+        intersectionSize++;
+      }
+    });
+
+    // Score based on how much of the job requirements are covered
+    return Math.round((intersectionSize / jobWords.size) * 100);
+  };
+
+  // Perform dynamic analysis based on actual inputs
   const startAnalysis = () => {
     if (!jobDescription.trim() || (!resumeContent.trim() && !fileName)) {
       alert('Please fill out both the Job Description and your Resume before analyzing.');
@@ -269,21 +299,98 @@ export default function Home() {
     setAnalysisCompleted(false);
     setAnimatedScore(0);
 
-    // Simulate AI analysis delay
     setTimeout(() => {
+      // 1. Extract job description skills
+      const jobSkills = extractSkills(jobDescription);
+      
+      // 2. Extract resume skills
+      const resumeSkills = extractSkills(resumeContent);
+      
+      // 3. Find missing keywords
+      const missing = jobSkills.filter(skill => !resumeSkills.includes(skill));
+      
+      // 4. Calculate actual Match Score
+      let finalScore = 0;
+      if (jobSkills.length > 0) {
+        const matchedCount = jobSkills.length - missing.length;
+        finalScore = Math.round((matchedCount / jobSkills.length) * 100);
+        // Ensure a realistic base score if they write matching text
+        if (finalScore < 40 && computeWordOverlap(jobDescription, resumeContent) > 20) {
+          finalScore = Math.min(85, finalScore + 25);
+        }
+      } else {
+        // Fallback to general word overlap if no specific skills are matched
+        finalScore = Math.min(90, Math.max(30, computeWordOverlap(jobDescription, resumeContent)));
+      }
+
+      // Clamp score between 15% and 98% for realistic ATS limits
+      finalScore = Math.max(15, Math.min(98, finalScore));
+
+      // 5. Generate Dynamic Bullet Suggestion cards
+      // Check if the input matches any template
+      const matchedTemplate = Object.values(MOCK_DATA).find(
+        template => 
+          jobDescription.toLowerCase().includes(template.bullets[0].original.split(' ')[0].toLowerCase()) ||
+          resumeContent.toLowerCase().includes(template.bullets[0].original.split(' ')[0].toLowerCase())
+      );
+
+      let generatedBullets = [];
+      if (matchedTemplate) {
+        // Use the high-fidelity pre-made bullet rewrites for template matches
+        generatedBullets = matchedTemplate.bullets;
+      } else {
+        // Create generic, dynamically-filled suggestions based on actual inputs
+        const missingTextList = missing.map(m => m.toUpperCase());
+        
+        generatedBullets = [
+          {
+            id: 1,
+            original: 'Responsible for general day-to-day operations and team support.',
+            tailored: `Led cross-functional collaborations and injected ${missingTextList[0] || 'core requirements'} into daily operations to drive project deliveries.`,
+            reason: `Directly targets key role expectations and incorporates your missing skill (${missing[0] || 'job requirements'}).`
+          },
+          {
+            id: 2,
+            original: 'Worked on projects and helped complete tasks on schedule.',
+            tailored: `Managed task lifecycles using ${missing[1] || 'structured workflows'}, delivering key project milestones 15% faster than average.`,
+            reason: `Replaces passive verbs with active outcomes and highlights the missing keyword (${missing[1] || 'methodologies'}).`
+          }
+        ];
+
+        // If they have less than 2 missing keywords, generate general professional upgrades
+        if (missing.length === 0) {
+          generatedBullets = [
+            {
+              id: 1,
+              original: 'Helped resolve client tickets and worked on issues.',
+              tailored: 'Troubleshot and resolved 40+ technical inquiries weekly, increasing user satisfaction ratings by 12%.',
+              reason: 'Adds measurable performance indicators and strong operational verbs.'
+            }
+          ];
+        }
+      }
+
+      // Set states
+      setScore(finalScore);
+      setMissingKeywords(missing.map(term => ({
+        text: term.charAt(0).toUpperCase() + term.slice(1),
+        type: 'hard'
+      })));
+      setBullets(generatedBullets);
+
       setIsAnalyzing(false);
       setAnalysisCompleted(true);
     }, 1500);
   };
 
-  // Animate the match score percentage gauge once completed
+  // Animate Match Score gauge from 0 to actual score
   useEffect(() => {
     if (analysisCompleted) {
       let current = 0;
       const interval = setInterval(() => {
         current += 2;
-        if (current >= targetScore) {
-          setAnimatedScore(targetScore);
+        if (current >= score) {
+          setAnimatedScore(score);
           clearInterval(interval);
         } else {
           setAnimatedScore(current);
@@ -291,7 +398,7 @@ export default function Home() {
       }, 15);
       return () => clearInterval(interval);
     }
-  }, [analysisCompleted, targetScore]);
+  }, [analysisCompleted, score]);
 
   // Copy helper
   const handleCopy = (id: number, text: string) => {
@@ -302,13 +409,13 @@ export default function Home() {
 
   // Keyword operations
   const removeKeyword = (idx: number) => {
-    setKeywords(keywords.filter((_, i) => i !== idx));
+    setMissingKeywords(missingKeywords.filter((_, i) => i !== idx));
   };
 
   const addKeyword = (e: React.FormEvent) => {
     e.preventDefault();
     if (newKeyword.trim()) {
-      setKeywords([...keywords, { text: newKeyword.trim(), type: 'hard' }]);
+      setMissingKeywords([...missingKeywords, { text: newKeyword.trim(), type: 'hard' }]);
       setNewKeyword('');
       setShowAddKeyword(false);
     }
@@ -603,7 +710,7 @@ export default function Home() {
                     <div className="flex items-center justify-between">
                       <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                         <AlertCircle className="h-3.5 w-3.5 text-[#008080]" />
-                        Missing Keywords ({keywords.length})
+                        Missing Keywords ({missingKeywords.length})
                       </h3>
                       
                       {!showAddKeyword && (
@@ -644,8 +751,8 @@ export default function Home() {
                     )}
 
                     <div className="flex flex-wrap gap-2 p-4 rounded-lg bg-slate-50 border border-slate-200 max-h-36 overflow-y-auto">
-                      {keywords.length > 0 ? (
-                        keywords.map((kw, idx) => (
+                      {missingKeywords.length > 0 ? (
+                        missingKeywords.map((kw, idx) => (
                           <div 
                             key={idx} 
                             className="group flex items-center gap-1.5 rounded-full border border-teal-100 bg-teal-50 hover:bg-teal-100/70 px-3 py-0.5 text-xs text-teal-800 transition-all font-medium"
@@ -674,7 +781,7 @@ export default function Home() {
                     </h3>
 
                     <div className="flex flex-col gap-4 max-h-[350px] overflow-y-auto pr-1">
-                      {tailoredBullets.map((bullet) => (
+                      {bullets.map((bullet) => (
                         <div key={bullet.id} className="rounded-lg border border-slate-200 bg-white p-4.5 flex flex-col gap-3">
                           
                           {/* Original line */}
