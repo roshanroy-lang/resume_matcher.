@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
+import Script from 'next/script';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -78,8 +79,11 @@ export default function RootLayout({
     "description": "AI-Powered Resume Matcher & Tailor Engine to scan your resume against job descriptions for ATS optimization."
   };
 
-  // Default to your Google Analytics ID, with environment variable override support
+  // Google Analytics ID Configuration
   const gaId = process.env.NEXT_PUBLIC_GA_ID || "G-TJ530NH7BX";
+
+  // Google AdSense Publisher ID Configuration
+  const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-1234567890123456";
 
   return (
     <html
@@ -87,6 +91,17 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#f8fafc] text-[#0f172a] font-sans selection:bg-teal-500/25 selection:text-teal-900">
+        
+        {/* Google AdSense integration */}
+        {adsenseClientId && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
+
         <div className="relative min-h-screen flex flex-col overflow-hidden">
           {children}
         </div>
