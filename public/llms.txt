@@ -1,0 +1,15 @@
+# ResumeMatch AI - Resume Optimizer & ATS Matcher
+
+ResumeMatch AI is a web application designed to help job seekers compare their resumes against target job descriptions and optimize them for Applicant Tracking Systems (ATS).
+
+## Core Capabilities
+- **Resume Text Scanning**: Analyzes resume content against key requirements, terms, and competencies from a job description.
+- **Match Score**: Calculates a real-time compatibility score (0-100%) indicating how well the resume aligns with the job.
+- **Missing Keywords Extraction**: Identifies technical tools, frameworks, and core skills mentioned in the job description but missing from the resume.
+- **Tailored AI Rewrites**: Provides context-aware, metric-driven bullet point rewrites to replace weak or unoptimized resume bullets.
+
+## Technical Details
+- **Frontend Stack**: Next.js 16, Tailwind CSS v4, TypeScript, Lucide React.
+- **Design Aesthetic**: Minimalist light-mode layout with a teal accent theme.
+- **Search Metadata**: Full JSON-LD schema (WebSite sitelinks search box, SoftwareApplication tags), sitemap.xml, and robots.txt.
+- **Accessibility & Performance**: Static rendering optimization, SEO meta tags, and responsive layouts.
