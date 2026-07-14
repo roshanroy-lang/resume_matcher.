@@ -43,7 +43,7 @@ Provide the analysis output in JSON format with the following keys:
 
 Ensure the output is valid JSON and matches the requested structure.`;
 
-    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const apiResponse = await fetch(apiEndpoint, {
       method: 'POST',
