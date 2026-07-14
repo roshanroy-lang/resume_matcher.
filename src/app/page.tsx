@@ -430,9 +430,13 @@ export default function Home() {
         <div className="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
           
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#008080] shadow-sm">
-              <span className="text-sm font-black text-white">RM</span>
-            </div>
+            <Image
+              src="/logo.png"
+              alt="ResumeMatch Logo"
+              width={36}
+              height={36}
+              className="rounded-lg shadow-sm"
+            />
             <span className="text-lg font-bold text-slate-900 tracking-tight">
               ResumeMatch
             </span>
