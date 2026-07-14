@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ResumeMatch AI - AI-Powered Resume Matcher & Tailor Engine
 
-## Getting Started
+**ResumeMatch AI** is a responsive, minimalist frontend dashboard designed to help job applicants optimize their resumes for Applicant Tracking Systems (ATS) in seconds. By aligning resume bullets directly with job descriptions, users can instantly scan compatibility, view missing keywords, and get tailored AI-style bullet rewrites.
 
-First, run the development server:
+The design implements a clean, high-contrast, light-mode teal aesthetic matching the layout specifications of premium software dashboards.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* **Inputs Panel**: Simple textareas for job description pasting and resume text, alongside a visual file drag-and-drop uploader.
+* **Match Score Gauge**: An animated, responsive SVG circular progress ring displaying ATS compatibility percentage.
+* **Missing Keywords Tracker**: Interactive badge tags highlighting critical skills, framework names, and tool requirements missing from the resume. Supports live tag removal and keyword additions.
+* **Tailored Bullet Suggestions**: Side-by-side card comparisons showing "Original" bullet lines versus "Tailored AI Rewrite" suggestions (with metrics and active verbs), accompanied by copy-to-clipboard functionality and rationale explanations.
+* **Built-in Sample Data Loader**: One-click mock button in the header nav to prefill inputs and demonstrate the matching algorithm immediately.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+* **Core**: [Next.js 16 (App Router)](https://nextjs.org/)
+* **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+* **Language**: [TypeScript](https://www.typescriptlang.org/)
+* **Icons**: [Lucide React](https://lucide.dev/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 💻 Local Development
 
-## Deploy on Vercel
+Follow these steps to run the project locally on your machine:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/roshanroy-lang/resume_matcher..git
+   cd resume_matcher
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+   *Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.*
+
+4. **Compile production build**:
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 🌐 Production Deployment
+
+The project is optimized for deployment on the [Vercel Platform](https://vercel.com/):
+
+1. Log into Vercel and link your GitHub account.
+2. Select **Import Project** and choose the `resume_matcher.` repository.
+3. Vercel will auto-detect Next.js and build the application.
+4. (Optional) Turn on **Vercel Web Analytics** in your project dashboard with one click to monitor visitors and user engagement.
+
+---
+
+## 🔍 Search Engine Optimization (SEO)
+
+The app is built with SEO best practices:
+* **JSON-LD Structured Data**: Includes schemas in the head representing the app as a `SoftwareApplication` and a `WebSite` containing a Google `SearchAction` (enables Google Sitelinks Search Box features).
+* **Robots & Sitemap**: Statically exports `/sitemap.xml` and `/robots.txt` upon production compilation for search crawlers.
+* **Metadata**: Full OpenGraph and Twitter card attributes are pre-configured in the layout shell.
