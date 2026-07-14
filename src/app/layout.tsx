@@ -78,6 +78,9 @@ export default function RootLayout({
     "description": "AI-Powered Resume Matcher & Tailor Engine to scan your resume against job descriptions for ATS optimization."
   };
 
+  // Default to your Google Analytics ID, with environment variable override support
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || "G-TJ530NH7BX";
+
   return (
     <html
       lang="en"
@@ -98,9 +101,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
         />
 
-        {/* Google Analytics (Runs only if NEXT_PUBLIC_GA_ID environment variable is set on Vercel) */}
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        {/* Google Analytics */}
+        {gaId && (
+          <GoogleAnalytics gaId={gaId} />
         )}
       </body>
     </html>
