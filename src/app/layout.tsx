@@ -82,8 +82,8 @@ export default function RootLayout({
   // Google Analytics ID Configuration
   const gaId = process.env.NEXT_PUBLIC_GA_ID || "G-TJ530NH7BX";
 
-  // Google AdSense Publisher ID Configuration
-  const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-1234567890123456";
+  // Google AdSense Publisher ID Configuration - Defaulted to your ID
+  const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-8454683847069141";
 
   return (
     <html
