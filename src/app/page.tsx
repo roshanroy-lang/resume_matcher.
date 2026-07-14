@@ -238,10 +238,7 @@ export default function Home() {
     setAnimatedScore(0);
   };
 
-  // Trigger loading defaults on mount
-  useEffect(() => {
-    handleLoadMockData('tech');
-  }, []);
+
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
