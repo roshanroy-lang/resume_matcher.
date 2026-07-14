@@ -18,54 +18,198 @@ import {
   Plus
 } from 'lucide-react';
 
-// Pre-filled mock data for easier testing
-const MOCK_JOB_DESCRIPTION = `We are looking for a Senior Frontend Engineer with 4+ years of experience building scalable web applications. 
+// Multi-Industry Prefilled Mock Data
+const MOCK_DATA = {
+  tech: {
+    name: "Technology & Software Engineering",
+    jobDescription: `We are looking for a Senior Frontend Engineer with 4+ years of experience building scalable web applications. 
 
 Required Skills:
 - Strong experience with React, Next.js, and TypeScript
 - Expertise in Tailwind CSS and responsive design
 - Experience implementing CI/CD pipelines and Docker
 - Knowledge of GraphQL and RESTful APIs
-- Strong collaboration and communication skills`;
-
-const MOCK_RESUME_CONTENT = `John Doe - Frontend Developer
+- Strong collaboration and communication skills`,
+    resumeContent: `John Doe - Frontend Developer
 Experience:
 - Built web pages using React and CSS.
 - Maintained web applications and worked with APIs.
 - Collaborated with QA team to fix bugs.
 
-Skills: React, JavaScript, HTML, CSS, Git.`;
-
-const MOCK_KEYWORDS = [
-  { text: 'Next.js', type: 'hard' },
-  { text: 'TypeScript', type: 'hard' },
-  { text: 'GraphQL', type: 'hard' },
-  { text: 'CI/CD Pipelines', type: 'tool' },
-  { text: 'Docker', type: 'tool' },
-  { text: 'RESTful APIs', type: 'hard' },
-  { text: 'Responsive Design', type: 'soft' }
-];
-
-const MOCK_TAILORED_BULLETS = [
-  {
-    id: 1,
-    original: 'Built web pages using React and CSS.',
-    tailored: 'Architected and built 15+ responsive web pages using React, Next.js, and Tailwind CSS, increasing page load speed by 35%.',
-    reason: 'Highlights experience with requested framework (Next.js) and styling tool (Tailwind CSS) while adding quantifiable metrics.'
+Skills: React, JavaScript, HTML, CSS, Git.`,
+    keywords: [
+      { text: 'Next.js', type: 'hard' },
+      { text: 'TypeScript', type: 'hard' },
+      { text: 'GraphQL', type: 'hard' },
+      { text: 'CI/CD Pipelines', type: 'tool' },
+      { text: 'Docker', type: 'tool' },
+      { text: 'RESTful APIs', type: 'hard' },
+      { text: 'Responsive Design', type: 'soft' }
+    ],
+    bullets: [
+      {
+        id: 1,
+        original: 'Built web pages using React and CSS.',
+        tailored: 'Architected and built 15+ responsive web pages using React, Next.js, and Tailwind CSS, increasing page load speed by 35%.',
+        reason: 'Highlights experience with requested framework (Next.js) and styling tool (Tailwind CSS) while adding quantifiable metrics.'
+      },
+      {
+        id: 2,
+        original: 'Maintained web applications and worked with APIs.',
+        tailored: 'Integrated complex RESTful and GraphQL APIs with robust error-handling, reducing application runtime exceptions by 18%.',
+        reason: 'Addresses the specific requirement for RESTful APIs and GraphQL expertise.'
+      },
+      {
+        id: 3,
+        original: 'Collaborated with QA team to fix bugs.',
+        tailored: 'Collaborated across cross-functional engineering and QA teams, establishing CI/CD pipeline automation and Docker deployments to streamline release cycles.',
+        reason: 'Demonstrates communication, CI/CD experience, and Docker usage as requested.'
+      }
+    ],
+    score: 74
   },
-  {
-    id: 2,
-    original: 'Maintained web applications and worked with APIs.',
-    tailored: 'Integrated complex RESTful and GraphQL APIs with robust error-handling, reducing application runtime exceptions by 18%.',
-    reason: 'Addresses the specific requirement for RESTful APIs and GraphQL expertise.'
+  marketing: {
+    name: "Marketing & Growth Sales",
+    jobDescription: `We are looking for a Growth Marketing Manager to lead our digital user acquisition campaigns.
+
+Required Skills:
+- Experience planning and executing paid campaigns (Google Ads, Meta Ads)
+- Strong SEO search optimization and Content Strategy skills
+- Ability to track campaigns using Google Analytics (GA4)
+- Knowledge of CRM tools like HubSpot or Salesforce
+- Data-driven mindset and strong copywriting skills`,
+    resumeContent: `Jane Smith - Digital Marketer
+Experience:
+- Ran email marketing campaigns.
+- Wrote blog posts and managed social media.
+- Analyzed website traffic data.
+
+Skills: Marketing, Content Writing, SEO, Excel, Social Media.`,
+    keywords: [
+      { text: 'User Acquisition', type: 'hard' },
+      { text: 'Google Ads', type: 'hard' },
+      { text: 'Content Strategy', type: 'hard' },
+      { text: 'Google Analytics (GA4)', type: 'tool' },
+      { text: 'HubSpot / Salesforce', type: 'tool' },
+      { text: 'Copywriting', type: 'soft' }
+    ],
+    bullets: [
+      {
+        id: 1,
+        original: 'Ran email marketing campaigns.',
+        tailored: 'Designed and executed multi-channel email campaigns for 10k+ subscribers, increasing click-through rates by 18% and generating $12K in revenue.',
+        reason: 'Adds direct metrics and demonstrates revenue impact which Google Ads managers look for.'
+      },
+      {
+        id: 2,
+        original: 'Wrote blog posts and managed social media.',
+        tailored: 'Authored 15+ SEO-optimized blog articles and planned content strategy, boosting organic search traffic by 34% in 6 months.',
+        reason: 'Validates requested skills in SEO and content strategy with clear metrics.'
+      },
+      {
+        id: 3,
+        original: 'Analyzed website traffic data.',
+        tailored: 'Leveraged Google Analytics (GA4) and CRM dashboards to analyze campaign performance, cutting client acquisition costs by 15%.',
+        reason: 'Directly targets Google Analytics and CRM tools requirement.'
+      }
+    ],
+    score: 68
   },
-  {
-    id: 3,
-    original: 'Collaborated with QA team to fix bugs.',
-    tailored: 'Collaborated across cross-functional engineering and QA teams, establishing CI/CD pipeline automation and Docker deployments to streamline release cycles.',
-    reason: 'Demonstrates communication, CI/CD experience, and Docker usage as requested.'
+  management: {
+    name: "Project Management & Leadership",
+    jobDescription: `Seeking an Agile Project Manager to coordinate cross-functional software and operations teams.
+
+Required Skills:
+- Strong experience with Agile and Scrum methodologies
+- Certified Scrum Master (CSM) is preferred
+- Expert tracking project sprints in Jira / Confluence
+- Risk management and budget oversight (up to $50K)
+- Excellent stakeholder communication`,
+    resumeContent: `Bob Johnson - Project Assistant
+Experience:
+- Managed team schedules and deadlines.
+- Tracked task progress on boards.
+- Reported status updates to managers.
+
+Skills: Management, Excel, Jira, Communication, PowerPoint.`,
+    keywords: [
+      { text: 'Agile Methodology', type: 'hard' },
+      { text: 'Scrum Master', type: 'hard' },
+      { text: 'Risk Management', type: 'hard' },
+      { text: 'Jira Sprint Planning', type: 'tool' },
+      { text: 'Budget Oversight', type: 'hard' },
+      { text: 'Stakeholder Communication', type: 'soft' }
+    ],
+    bullets: [
+      {
+        id: 1,
+        original: 'Managed team schedules and deadlines.',
+        tailored: 'Facilitated daily standups and sprint planning for a team of 12 using Agile methodologies, increasing task completion rate by 22%.',
+        reason: 'Highlights the specific Agile methodology and sprint terminology requested.'
+      },
+      {
+        id: 2,
+        original: 'Tracked task progress on boards.',
+        tailored: 'Established structured Jira workflows, sprint backlog health tracking, and burndown charts to ensure 95% on-time project delivery.',
+        reason: 'Shows advanced Jira coordination capabilities rather than basic tracking.'
+      },
+      {
+        id: 3,
+        original: 'Reported status updates to managers.',
+        tailored: 'Created stakeholder reports and managed communications, keeping executive leadership informed on budget oversight and risk audits.',
+        reason: 'Addresses stakeholder communication and risk management skills directly.'
+      }
+    ],
+    score: 71
+  },
+  healthcare: {
+    name: "Healthcare & Registered Nursing",
+    jobDescription: `Seeking a compassionate Registered Nurse (RN) for our busy emergency department.
+
+Required Skills:
+- Advanced patient assessment and triage care
+- Experience in Electronic Medical Records (EMR) documentation
+- CPR and Basic Life Support (BLS) certification
+- Medication administration and IV therapy
+- Emergency crisis management and patient advocacy`,
+    resumeContent: `Alice Brown - Registered Nurse (RN)
+Experience:
+- Cared for emergency room patients.
+- Wrote down patient vital signs.
+- Handed out medications and helped doctor.
+
+Skills: Patient care, nursing, CPR, Microsoft Word.`,
+    keywords: [
+      { text: 'Patient Assessment', type: 'hard' },
+      { text: 'Triage Care', type: 'hard' },
+      { text: 'EMR Documentation', type: 'tool' },
+      { text: 'BLS Certification', type: 'hard' },
+      { text: 'Medication Administration', type: 'hard' },
+      { text: 'Crisis Management', type: 'soft' }
+    ],
+    bullets: [
+      {
+        id: 1,
+        original: 'Cared for emergency room patients.',
+        tailored: 'Provided emergency patient assessment and triage care for 30+ daily high-acuity patients in a fast-paced environment.',
+        reason: 'Upgrades basic patient care terms to specific medical roles like triage and patient assessment.'
+      },
+      {
+        id: 2,
+        original: 'Wrote down patient vital signs.',
+        tailored: 'Documented accurate treatment charts and vital signs in Electronic Medical Records (EMR), ensuring 100% HIPAA compliance.',
+        reason: 'Injects EMR and compliance parameters requested by clinical directors.'
+      },
+      {
+        id: 3,
+        original: 'Handed out medications and helped doctor.',
+        tailored: 'Managed medication administration and IV therapy, collaborating with physicians during acute emergency crisis interventions.',
+        reason: 'Highlights medication administration and crisis management requirements.'
+      }
+    ],
+    score: 78
   }
-];
+};
 
 export default function Home() {
   const [jobDescription, setJobDescription] = useState('');
@@ -77,25 +221,41 @@ export default function Home() {
   const [animatedScore, setAnimatedScore] = useState(0);
   const [copiedId, setCopiedId] = useState<number | null>(null);
   
-  // Custom inputs for missing keywords interaction
-  const [keywords, setKeywords] = useState(MOCK_KEYWORDS);
+  // Selected industry key for the loader
+  const [industryKey, setIndustryKey] = useState<keyof typeof MOCK_DATA>('tech');
+
+  // Custom states for missing keywords and rewrites
+  const [keywords, setKeywords] = useState(MOCK_DATA.tech.keywords);
+  const [tailoredBullets, setTailoredBullets] = useState(MOCK_DATA.tech.bullets);
+  const [targetScore, setTargetScore] = useState(MOCK_DATA.tech.score);
+  
   const [newKeyword, setNewKeyword] = useState('');
   const [showAddKeyword, setShowAddKeyword] = useState(false);
 
-  // Load prefilled examples
-  const loadMockData = () => {
-    setJobDescription(MOCK_JOB_DESCRIPTION);
-    setResumeContent(MOCK_RESUME_CONTENT);
+  // Load selected industry template
+  const handleLoadMockData = (key: keyof typeof MOCK_DATA) => {
+    const data = MOCK_DATA[key];
+    setJobDescription(data.jobDescription);
+    setResumeContent(data.resumeContent);
+    setKeywords(data.keywords);
+    setTailoredBullets(data.bullets);
+    setTargetScore(data.score);
     setFileName(null);
     setActiveTab('paste');
+    setAnalysisCompleted(false);
+    setAnimatedScore(0);
   };
+
+  // Trigger loading defaults on mount
+  useEffect(() => {
+    handleLoadMockData('tech');
+  }, []);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setFileName(file.name);
-      // Simulate reading resume text
-      setResumeContent(`[Uploaded Document: ${file.name}]\n\nJohn Doe\nExperienced React developer specialized in building modern user interfaces.\n\nTechnical Skills: React, Redux, JavaScript, HTML, CSS, Git, Node.js.\nExperience:\n- Developed responsive frontend applications.\n- Collaborated on agile team products.`);
+      setResumeContent(`[Uploaded Document: ${file.name}]\n\nJohn Doe\nExperienced candidate specialized in this field.\n\nTechnical Skills: Professional skillset, communications, software packages.\nExperience:\n- Handled core tasks.\n- Collaborated on team products.`);
     }
   };
 
@@ -119,7 +279,6 @@ export default function Home() {
   // Animate the match score percentage gauge once completed
   useEffect(() => {
     if (analysisCompleted) {
-      const targetScore = 74; // Mock score percentage
       let current = 0;
       const interval = setInterval(() => {
         current += 2;
@@ -129,10 +288,10 @@ export default function Home() {
         } else {
           setAnimatedScore(current);
         }
-      }, 20);
+      }, 15);
       return () => clearInterval(interval);
     }
-  }, [analysisCompleted]);
+  }, [analysisCompleted, targetScore]);
 
   // Copy helper
   const handleCopy = (id: number, text: string) => {
@@ -166,37 +325,24 @@ export default function Home() {
       <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
           
-          {/* Logo element matches InvoiceRescue branding */}
           <div className="flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt="ResumeMatch Logo"
-              width={36}
-              height={36}
-              className="rounded-lg shadow-sm"
-            />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#008080] shadow-sm">
+              <span className="text-sm font-black text-white">RM</span>
+            </div>
             <span className="text-lg font-bold text-slate-900 tracking-tight">
               ResumeMatch
             </span>
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Action pill matches InvoiceRescue subtext badges */}
             <div className="hidden lg:flex items-center gap-1.5 rounded-full bg-teal-50 border border-teal-100/80 px-3 py-1 text-xs font-medium text-[#008080]">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Automated resume optimization</span>
+              <span>Universal Career Matcher</span>
             </div>
 
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 pl-4 border-l border-slate-200">
               <a href="#" className="text-slate-900 font-semibold transition-colors">Dashboard</a>
               <a href="#" className="hover:text-slate-900 transition-colors">History</a>
-              <button 
-                onClick={loadMockData} 
-                className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all cursor-pointer font-medium"
-              >
-                <RefreshCw className="h-3 w-3" />
-                Load Sample
-              </button>
             </nav>
           </div>
         </div>
@@ -205,25 +351,46 @@ export default function Home() {
       {/* Main Content */}
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 flex-grow flex flex-col gap-10 relative z-10">
         
-        {/* Title area matches InvoiceRescue spacing and layout hierarchy */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200/60 pb-8">
+        {/* Title area */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-200/60 pb-8">
           <div className="max-w-3xl">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
               Optimize your resume <br />
-              <span className="text-[#008080]">for applicant tracking systems.</span>
+              <span className="text-[#008080]">for any industry or profession.</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-500 max-w-2xl font-normal leading-relaxed">
-              ResumeMatch compares your profile content against key job description terms in real-time, delivering a match score percentage and instant tailored bullet-point modifications.
+              ResumeMatch compares your profile content against key requirements in any field in real-time, delivering compatibility metrics and tailored copywriting improvements.
             </p>
           </div>
           
-          <div className="flex items-center gap-2 self-start md:self-auto">
-            <button
-              onClick={loadMockData}
-              className="md:hidden flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-all shadow-sm"
+          {/* Quick industry selector widget */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm self-start lg:self-auto">
+            <div className="flex items-center gap-1 text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <Briefcase className="h-3.5 w-3.5 text-[#008080]" />
+              <span>Try an Industry:</span>
+            </div>
+            <select
+              value={industryKey}
+              onChange={(e) => {
+                const key = e.target.value as keyof typeof MOCK_DATA;
+                setIndustryKey(key);
+                handleLoadMockData(key);
+              }}
+              className="bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-[#008080] cursor-pointer"
             >
-              <RefreshCw className="h-4 w-4" />
-              Load Sample Data
+              <option value="tech">Technology / Software Dev</option>
+              <option value="marketing">Marketing / Growth Sales</option>
+              <option value="management">Project Management / Leadership</option>
+              <option value="healthcare">Healthcare / Registered Nursing</option>
+            </select>
+            
+            <button
+              onClick={() => handleLoadMockData(industryKey)}
+              className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-100 hover:bg-slate-200 px-3 py-2 text-xs text-slate-700 font-bold transition-all cursor-pointer"
+              title="Reset sample data for selected industry"
+            >
+              <RefreshCw className="h-3 w-3" />
+              <span>Load Template</span>
             </button>
           </div>
         </div>
@@ -242,12 +409,12 @@ export default function Home() {
               {/* Job Description Textarea */}
               <div className="flex flex-col gap-2">
                 <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                  Job Description
+                  Target Job Description
                 </label>
                 <textarea
                   value={jobDescription}
                   onChange={(e) => setJobDescription(e.target.value)}
-                  placeholder="Paste the target job description here..."
+                  placeholder="Paste the job description or role requirements here..."
                   className="w-full h-48 rounded-lg border border-slate-200 bg-[#f8fafc]/50 p-4 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#008080] focus:border-[#008080] transition-all resize-none"
                 />
               </div>
@@ -256,7 +423,7 @@ export default function Home() {
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                   <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    Resume Content
+                    Your Current Resume
                   </label>
                   
                   {/* Tabs */}
@@ -289,7 +456,7 @@ export default function Home() {
                   <textarea
                     value={resumeContent}
                     onChange={(e) => setResumeContent(e.target.value)}
-                    placeholder="Paste the current version of your resume here..."
+                    placeholder="Paste the current text of your CV / Resume..."
                     className="w-full h-48 rounded-lg border border-slate-200 bg-[#f8fafc]/50 p-4 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#008080] focus:border-[#008080] transition-all resize-none"
                   />
                 ) : (
@@ -326,7 +493,7 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Action Button matches InvoiceRescue solid teal look */}
+              {/* Action Button */}
               <button
                 onClick={startAnalysis}
                 disabled={isAnalyzing}
@@ -335,7 +502,7 @@ export default function Home() {
                 {isAnalyzing ? (
                   <>
                     <RefreshCw className="h-4 w-4 animate-spin" />
-                    <span>Analyzing Resume...</span>
+                    <span>Comparing documents...</span>
                   </>
                 ) : (
                   <>
@@ -363,7 +530,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-sm font-bold text-slate-800">Awaiting matching instructions</h3>
                   <p className="text-xs sm:text-sm text-slate-500 max-w-sm mt-2 leading-relaxed">
-                    Provide the job description and your resume on the left, then click <strong className="text-[#008080]">"Analyze &amp; Match"</strong> to generate your real-time score and keywords optimization suggestions.
+                    Provide the job description and your resume on the left, then click <strong className="text-[#008080]">&quot;Analyze &amp; Match&quot;</strong> to generate your real-time score and keywords optimization suggestions.
                   </p>
                 </div>
               ) : isAnalyzing ? (
@@ -377,7 +544,7 @@ export default function Home() {
                   <div>
                     <h3 className="text-sm font-bold text-slate-800">Running semantic analysis...</h3>
                     <p className="text-xs text-slate-500 mt-2 max-w-xs leading-relaxed">
-                      Comparing resume bullets with job key terms to verify ATS compatibility.
+                      Comparing resume bullets with role requirements to verify ATS compatibility.
                     </p>
                   </div>
                 </div>
@@ -456,7 +623,7 @@ export default function Home() {
                           type="text"
                           value={newKeyword}
                           onChange={(e) => setNewKeyword(e.target.value)}
-                          placeholder="e.g. Kubernetes"
+                          placeholder="e.g. Communication"
                           className="flex-grow rounded-lg border border-slate-200 bg-white p-2 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#008080] focus:border-[#008080]"
                           autoFocus
                         />
@@ -507,7 +674,7 @@ export default function Home() {
                     </h3>
 
                     <div className="flex flex-col gap-4 max-h-[350px] overflow-y-auto pr-1">
-                      {MOCK_TAILORED_BULLETS.map((bullet) => (
+                      {tailoredBullets.map((bullet) => (
                         <div key={bullet.id} className="rounded-lg border border-slate-200 bg-white p-4.5 flex flex-col gap-3">
                           
                           {/* Original line */}
