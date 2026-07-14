@@ -446,7 +446,6 @@ export default function Home() {
 
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 pl-4 border-l border-slate-200">
               <a href="#" className="text-slate-900 font-semibold transition-colors">Dashboard</a>
-              <a href="#" className="hover:text-slate-900 transition-colors">History</a>
             </nav>
           </div>
         </div>
