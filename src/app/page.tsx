@@ -1259,7 +1259,6 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="hover:underline cursor-pointer">Privacy Policy</Link>
             <Link href="/terms" className="hover:underline cursor-pointer">Terms of Service</Link>
-            <Link href="/contact" className="hover:underline cursor-pointer">Contact</Link>
           </div>
         </div>
       </footer>
