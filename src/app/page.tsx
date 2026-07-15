@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { 
   Sparkles, 
   UploadCloud, 
@@ -1256,9 +1257,9 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p>&copy; 2026 ResumeMatch AI. Built for recruitment engineering.</p>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:underline">Privacy Policy</a>
-            <a href="#" className="hover:underline">Terms of Service</a>
-            <a href="#" className="hover:underline">Contact</a>
+            <Link href="/privacy" className="hover:underline cursor-pointer">Privacy Policy</Link>
+            <Link href="/terms" className="hover:underline cursor-pointer">Terms of Service</Link>
+            <Link href="/contact" className="hover:underline cursor-pointer">Contact</Link>
           </div>
         </div>
       </footer>
