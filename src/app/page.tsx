@@ -1086,7 +1086,13 @@ export default function Home() {
                           </div>
                         ))
                       ) : (
-                        <p className="text-xs text-slate-400 italic">No missing keywords! You have a full match.</p>
+                        score === 0 ? (
+                          <p className="text-xs text-slate-400 italic font-normal">
+                            No keywords matched. Please enter a detailed job description or configure your Gemini API Key in Vercel settings for dynamic role requirements generation.
+                          </p>
+                        ) : (
+                          <p className="text-xs text-[#008080] italic font-semibold">No missing keywords! You have a full match.</p>
+                        )
                       )}
                     </div>
                   </div>
