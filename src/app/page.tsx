@@ -414,50 +414,7 @@ export default function Home() {
     // 2. FALLBACK: Local client-side matching engine (safe from regex bugs)
     setTimeout(() => {
       try {
-        const isJobTitleInput = jobDescription.trim().split(/\s+/).length < 12;
-        let matchedFallbackKey: keyof typeof MOCK_DATA | null = null;
-        
-        if (isJobTitleInput) {
-          const jdLower = jobDescription.toLowerCase();
-          if (/(developer|engineer|coder|programmer|software|react|next\.js|frontend|backend|fullstack|tech|web)/i.test(jdLower)) {
-            matchedFallbackKey = 'tech';
-          } else if (/(marketing|growth|seo|sales|ads|social|media|campaign)/i.test(jdLower)) {
-            matchedFallbackKey = 'marketing';
-          } else if (/(manager|pm|scrum|agile|product|project|coordinator|lead|leadership|operations)/i.test(jdLower)) {
-            matchedFallbackKey = 'management';
-          } else if (/(nurse|rn|clinical|medical|healthcare|patient|triage|hospital)/i.test(jdLower)) {
-            matchedFallbackKey = 'healthcare';
-          }
-        }
-
-        const targetJD = matchedFallbackKey ? MOCK_DATA[matchedFallbackKey].jobDescription : jobDescription;
-        const jobSkills = extractSkills(targetJD);
-        const resumeSkills = extractSkills(resumeContent);
-        const missing = jobSkills.filter(skill => !resumeSkills.includes(skill));
-        
-        let finalScore = 0;
-        if (jobSkills.length > 0) {
-          const matchedCount = jobSkills.length - missing.length;
-          if (matchedCount === 0) {
-            finalScore = 0;
-          } else {
-            finalScore = Math.round((matchedCount / jobSkills.length) * 100);
-            if (finalScore < 40 && computeWordOverlap(targetJD, resumeContent) > 20) {
-              finalScore = Math.min(85, finalScore + 25);
-            }
-          }
-        } else {
-          const rawOverlap = computeWordOverlap(targetJD, resumeContent);
-          if (rawOverlap < 12) {
-            finalScore = 0;
-          } else {
-            finalScore = Math.min(90, Math.max(0, rawOverlap));
-          }
-        }
-
-        finalScore = Math.max(0, Math.min(100, finalScore));
-
-        // Fallback calculations for ATS formatting audit
+        // 1. Calculate formatting audits first (always done on resumeContent)
         const hasEmailLocal = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i.test(resumeContent);
         const hasPhoneLocal = /[\d\-()\+\s]{7,15}/.test(resumeContent);
         const hasLinkedInLocal = /(linkedin\.com|github\.com)/i.test(resumeContent);
@@ -543,46 +500,102 @@ export default function Home() {
 
         fmtScoreLocal = Math.max(10, fmtScoreLocal);
 
-        // Generate templates / suggestions
-        const matchedTemplate = Object.values(MOCK_DATA).find(
-          template => 
-            jobDescription.toLowerCase().includes(template.bullets[0].original.split(' ')[0].toLowerCase()) ||
-            resumeContent.toLowerCase().includes(template.bullets[0].original.split(' ')[0].toLowerCase())
-        );
+        // 2. Perform job classification and match score calculations
+        const isJobTitleInput = jobDescription.trim().split(/\s+/).length < 12;
+        let matchedFallbackKey: keyof typeof MOCK_DATA | null = null;
+        
+        if (isJobTitleInput) {
+          const jdLower = jobDescription.toLowerCase();
+          if (/(developer|coder|programmer|software|react|next\.js|frontend|backend|fullstack|devops|web\s+developer|software\s+engineer|web\s+engineer|systems\s+engineer)/i.test(jdLower)) {
+            matchedFallbackKey = 'tech';
+          } else if (/(marketing|growth|seo|sales|ads|social|media|campaign)/i.test(jdLower)) {
+            matchedFallbackKey = 'marketing';
+          } else if (/(manager|pm|scrum|agile|product|project|coordinator|lead|leadership|operations)/i.test(jdLower)) {
+            matchedFallbackKey = 'management';
+          } else if (/(nurse|rn|clinical|medical|healthcare|patient|triage|hospital)/i.test(jdLower)) {
+            matchedFallbackKey = 'healthcare';
+          }
+        }
 
-        let generatedBullets = [];
-        if (matchedTemplate) {
-          generatedBullets = matchedTemplate.bullets;
-        } else if (matchedFallbackKey) {
-          generatedBullets = MOCK_DATA[matchedFallbackKey].bullets;
-          setIsInferred(true);
-          setInferredTitle(MOCK_DATA[matchedFallbackKey].name);
+        let finalScore = 0;
+        let missing: {text: string, type: string}[] = [];
+        let generatedBullets: any[] = [];
+
+        if (isJobTitleInput && !matchedFallbackKey) {
+          finalScore = 0;
+          missing = [];
+          generatedBullets = [];
         } else {
-          const missingTextList = missing.map(m => m.toUpperCase());
-          generatedBullets = [
-            {
-              id: 1,
-              original: 'Responsible for general day-to-day operations and team support.',
-              tailored: `Led cross-functional collaborations and injected ${missingTextList[0] || 'core requirements'} into daily operations to drive project deliveries.`,
-              reason: `Directly targets key role expectations and incorporates your missing skill (${missing[0] || 'job requirements'}).`
-            },
-            {
-              id: 2,
-              original: 'Worked on projects and helped complete tasks on schedule.',
-              tailored: `Managed task lifecycles using ${missing[1] || 'structured workflows'}, delivering key project milestones 15% faster than average.`,
-              reason: `Replaces passive verbs with active outcomes and highlights the missing keyword (${missing[1] || 'methodologies'}).`
+          const targetJD = matchedFallbackKey ? MOCK_DATA[matchedFallbackKey].jobDescription : jobDescription;
+          const jobSkills = extractSkills(targetJD);
+          const resumeSkills = extractSkills(resumeContent);
+          const missingSkills = jobSkills.filter(skill => !resumeSkills.includes(skill));
+          missing = missingSkills.map(term => ({
+            text: term.charAt(0).toUpperCase() + term.slice(1),
+            type: 'hard'
+          }));
+          
+          if (jobSkills.length > 0) {
+            const matchedCount = jobSkills.length - missingSkills.length;
+            if (matchedCount === 0) {
+              finalScore = 0;
+            } else {
+              finalScore = Math.round((matchedCount / jobSkills.length) * 100);
+              if (finalScore < 40 && computeWordOverlap(targetJD, resumeContent) > 20) {
+                finalScore = Math.min(85, finalScore + 25);
+              }
             }
-          ];
+          } else {
+            const rawOverlap = computeWordOverlap(targetJD, resumeContent);
+            if (rawOverlap < 12) {
+              finalScore = 0;
+            } else {
+              finalScore = Math.min(90, Math.max(0, rawOverlap));
+            }
+          }
 
-          if (missing.length === 0) {
+          finalScore = Math.max(0, Math.min(100, finalScore));
+
+          // Generate templates / suggestions
+          const matchedTemplate = Object.values(MOCK_DATA).find(
+            template => 
+              jobDescription.toLowerCase().includes(template.bullets[0].original.split(' ')[0].toLowerCase()) ||
+              resumeContent.toLowerCase().includes(template.bullets[0].original.split(' ')[0].toLowerCase())
+          );
+
+          if (matchedTemplate) {
+            generatedBullets = matchedTemplate.bullets;
+          } else if (matchedFallbackKey) {
+            generatedBullets = MOCK_DATA[matchedFallbackKey].bullets;
+            setIsInferred(true);
+            setInferredTitle(MOCK_DATA[matchedFallbackKey].name);
+          } else {
+            const missingTextList = missingSkills.map(m => m.toUpperCase());
             generatedBullets = [
               {
                 id: 1,
-                original: 'Helped resolve client tickets and worked on issues.',
-                tailored: 'Troubleshot and resolved 40+ technical inquiries weekly, increasing user satisfaction ratings by 12%.',
-                reason: 'Adds measurable performance indicators and strong operational verbs.'
+                original: 'Responsible for general day-to-day operations and team support.',
+                tailored: `Led cross-functional collaborations and injected ${missingTextList[0] || 'core requirements'} into daily operations to drive project deliveries.`,
+                reason: `Directly targets key role expectations and incorporates your missing skill (${missingSkills[0] || 'job requirements'}).`
+              },
+              {
+                id: 2,
+                original: 'Worked on projects and helped complete tasks on schedule.',
+                tailored: `Managed task lifecycles using ${missingSkills[1] || 'structured workflows'}, delivering key project milestones 15% faster than average.`,
+                reason: `Replaces passive verbs with active outcomes and highlights the missing keyword (${missingSkills[1] || 'methodologies'}).`
               }
             ];
+
+            if (missingSkills.length === 0) {
+              generatedBullets = [
+                {
+                  id: 1,
+                  original: 'Helped resolve client tickets and worked on issues.',
+                  tailored: 'Troubleshot and resolved 40+ technical inquiries weekly, increasing user satisfaction ratings by 12%.',
+                  reason: 'Adds measurable performance indicators and strong operational verbs.'
+                }
+              ];
+            }
           }
         }
 
@@ -593,10 +606,7 @@ export default function Home() {
         setHasLinkedIn(hasLinkedInLocal);
         setSectionsFound(sectionsLocal);
         setFormattingIssues(issuesLocal);
-        setMissingKeywords(missing.map(term => ({
-          text: term.charAt(0).toUpperCase() + term.slice(1),
-          type: 'hard'
-        })));
+        setMissingKeywords(missing);
         setBullets(generatedBullets);
       } catch (err) {
         console.error('Local fallback engine error:', err);
