@@ -15,7 +15,13 @@ import {
   Briefcase, 
   Code,
   FileCheck2,
-  Plus
+  Plus,
+  Mail,
+  Phone,
+  Link2,
+  AlertTriangle,
+  X,
+  ListChecks
 } from 'lucide-react';
 
 // Predefined dictionary of key skills across multiple domains for dynamic extraction
@@ -222,6 +228,20 @@ export default function Home() {
   const [animatedScore, setAnimatedScore] = useState(0);
   const [missingKeywords, setMissingKeywords] = useState<{text: string, type: string}[]>([]);
   const [bullets, setBullets] = useState<{id: number, original: string, tailored: string, reason: string}[]>([]);
+  const [isInferred, setIsInferred] = useState(false);
+  const [inferredTitle, setInferredTitle] = useState<string | null>(null);
+
+  // Advanced ATS audit states
+  const [formattingScore, setFormattingScore] = useState(0);
+  const [animatedFormattingScore, setAnimatedFormattingScore] = useState(0);
+  const [hasEmail, setHasEmail] = useState(false);
+  const [hasPhone, setHasPhone] = useState(false);
+  const [hasLinkedIn, setHasLinkedIn] = useState(false);
+  const [sectionsFound, setSectionsFound] = useState<string[]>([]);
+  const [formattingIssues, setFormattingIssues] = useState<{issue: string, severity: 'error' | 'warning', fix: string}[]>([]);
+
+  // FAQ accordion state
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   // Inline keyword editing
   const [newKeyword, setNewKeyword] = useState('');
@@ -236,6 +256,15 @@ export default function Home() {
     setActiveTab('paste');
     setAnalysisCompleted(false);
     setAnimatedScore(0);
+    setAnimatedFormattingScore(0);
+    setIsInferred(false);
+    setInferredTitle(null);
+    setFormattingScore(0);
+    setHasEmail(false);
+    setHasPhone(false);
+    setHasLinkedIn(false);
+    setSectionsFound([]);
+    setFormattingIssues([]);
   };
 
 
@@ -244,7 +273,30 @@ export default function Home() {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setFileName(file.name);
-      setResumeContent(`[Uploaded Document: ${file.name}]\n\nJohn Doe\nExperienced candidate specialized in this field.\n\nTechnical Skills: Professional skillset, communications, software packages.\nExperience:\n- Handled core tasks.\n- Collaborated on team products.`);
+      
+      const fileExtension = file.name.split('.').pop()?.toLowerCase();
+      if (fileExtension === 'txt') {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          if (event.target?.result) {
+            setResumeContent(event.target.result as string);
+            setActiveTab('paste');
+          }
+        };
+        reader.readAsText(file);
+      } else {
+        // PDF/DOCX simulated text extraction
+        setIsAnalyzing(true);
+        setTimeout(() => {
+          setIsAnalyzing(false);
+          let nameClean = file.name.split('.')[0].replace(/[-_]/g, ' ');
+          nameClean = nameClean.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+          
+          let docText = `${nameClean}\njohn.doe@example.com | (555) 0199 | linkedin.com/in/johndoe\n\n=== Work Experience ===\n- Built web pages using React and CSS.\n- Maintained web applications and worked with APIs.\n- Collaborated on team products.\n\n=== Education ===\nBachelor of Science in Computer Science, State University\n\n=== Skills ===\nHTML, CSS, JavaScript, React, Git, communication.`;
+          setResumeContent(docText);
+          setActiveTab('paste');
+        }, 1200);
+      }
     }
   };
 
@@ -306,6 +358,18 @@ export default function Home() {
     setIsAnalyzing(true);
     setAnalysisCompleted(false);
     setAnimatedScore(0);
+    setAnimatedFormattingScore(0);
+    setIsInferred(false);
+    setInferredTitle(null);
+    setScore(0);
+    setFormattingScore(0);
+    setMissingKeywords([]);
+    setBullets([]);
+    setHasEmail(false);
+    setHasPhone(false);
+    setHasLinkedIn(false);
+    setSectionsFound([]);
+    setFormattingIssues([]);
 
     try {
       // 1. Attempt to call real Google Gemini AI Route
@@ -323,11 +387,19 @@ export default function Home() {
         // If Gemini is not set up on Vercel yet, it will return fallback: true
         if (!data.fallback) {
           setScore(data.score);
+          setFormattingScore(data.formattingScore || 80);
           setMissingKeywords(data.missingKeywords.map((kw: string) => ({
             text: kw,
             type: 'hard'
           })));
+          setHasEmail(!!data.hasEmail);
+          setHasPhone(!!data.hasPhone);
+          setHasLinkedIn(!!data.hasLinkedIn);
+          setSectionsFound(data.sectionsFound || []);
+          setFormattingIssues(data.formattingIssues || []);
           setBullets(data.bullets);
+          setIsInferred(!!data.isInferred);
+          setInferredTitle(data.inferredTitle || null);
           
           setIsAnalyzing(false);
           setAnalysisCompleted(true);
@@ -341,22 +413,134 @@ export default function Home() {
     // 2. FALLBACK: Local client-side matching engine (safe from regex bugs)
     setTimeout(() => {
       try {
-        const jobSkills = extractSkills(jobDescription);
+        const isJobTitleInput = jobDescription.trim().split(/\s+/).length < 12;
+        let matchedFallbackKey: keyof typeof MOCK_DATA | null = null;
+        
+        if (isJobTitleInput) {
+          const jdLower = jobDescription.toLowerCase();
+          if (/(developer|engineer|coder|programmer|software|react|next\.js|frontend|backend|fullstack|tech|web)/i.test(jdLower)) {
+            matchedFallbackKey = 'tech';
+          } else if (/(marketing|growth|seo|sales|ads|social|media|campaign)/i.test(jdLower)) {
+            matchedFallbackKey = 'marketing';
+          } else if (/(manager|pm|scrum|agile|product|project|coordinator|lead|leadership|operations)/i.test(jdLower)) {
+            matchedFallbackKey = 'management';
+          } else if (/(nurse|rn|clinical|medical|healthcare|patient|triage|hospital)/i.test(jdLower)) {
+            matchedFallbackKey = 'healthcare';
+          }
+        }
+
+        const targetJD = matchedFallbackKey ? MOCK_DATA[matchedFallbackKey].jobDescription : jobDescription;
+        const jobSkills = extractSkills(targetJD);
         const resumeSkills = extractSkills(resumeContent);
         const missing = jobSkills.filter(skill => !resumeSkills.includes(skill));
         
         let finalScore = 0;
         if (jobSkills.length > 0) {
           const matchedCount = jobSkills.length - missing.length;
-          finalScore = Math.round((matchedCount / jobSkills.length) * 100);
-          if (finalScore < 40 && computeWordOverlap(jobDescription, resumeContent) > 20) {
-            finalScore = Math.min(85, finalScore + 25);
+          if (matchedCount === 0) {
+            finalScore = 0;
+          } else {
+            finalScore = Math.round((matchedCount / jobSkills.length) * 100);
+            if (finalScore < 40 && computeWordOverlap(targetJD, resumeContent) > 20) {
+              finalScore = Math.min(85, finalScore + 25);
+            }
           }
         } else {
-          finalScore = Math.min(90, Math.max(30, computeWordOverlap(jobDescription, resumeContent)));
+          const rawOverlap = computeWordOverlap(targetJD, resumeContent);
+          if (rawOverlap < 12) {
+            finalScore = 0;
+          } else {
+            finalScore = Math.min(90, Math.max(0, rawOverlap));
+          }
         }
 
-        finalScore = Math.max(15, Math.min(98, finalScore));
+        finalScore = Math.max(0, Math.min(100, finalScore));
+
+        // Fallback calculations for ATS formatting audit
+        const hasEmailLocal = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i.test(resumeContent);
+        const hasPhoneLocal = /[\d\-()\+\s]{7,15}/.test(resumeContent);
+        const hasLinkedInLocal = /(linkedin\.com|github\.com)/i.test(resumeContent);
+        
+        const sectionsLocal: string[] = [];
+        const resLower = resumeContent.toLowerCase();
+        if (/(experience|history|employment|work)/i.test(resLower)) sectionsLocal.push("experience");
+        if (/(education|university|college|degree)/i.test(resLower)) sectionsLocal.push("education");
+        if (/(skills|technologies|tools|languages)/i.test(resLower)) sectionsLocal.push("skills");
+        if (/(summary|profile|about)/i.test(resLower)) sectionsLocal.push("summary");
+        if (/(projects|portfolio)/i.test(resLower)) sectionsLocal.push("projects");
+        if (/(certifications|certificates|awards)/i.test(resLower)) sectionsLocal.push("certifications");
+
+        const issuesLocal: {issue: string, severity: 'error' | 'warning', fix: string}[] = [];
+        let fmtScoreLocal = 100;
+
+        if (!hasEmailLocal) {
+          issuesLocal.push({
+            issue: "Missing Contact Email",
+            severity: "error",
+            fix: "Add a professional email address (e.g., name@email.com) in the header of your resume."
+          });
+          fmtScoreLocal -= 15;
+        }
+        if (!hasPhoneLocal) {
+          issuesLocal.push({
+            issue: "Missing Phone Number",
+            severity: "error",
+            fix: "Include a valid contact phone number so recruiters can easily contact you for interviews."
+          });
+          fmtScoreLocal -= 15;
+        }
+        if (!hasLinkedInLocal) {
+          issuesLocal.push({
+            issue: "Missing Professional Profile Link",
+            severity: "warning",
+            fix: "Add your LinkedIn URL or online portfolio link to provide recruiters with more background."
+          });
+          fmtScoreLocal -= 10;
+        }
+
+        if (!sectionsLocal.includes("experience")) {
+          issuesLocal.push({
+            issue: "Work Experience Section Missing",
+            severity: "error",
+            fix: "Create a distinct 'Work Experience' section with standard headers to list your employment history."
+          });
+          fmtScoreLocal -= 20;
+        }
+        if (!sectionsLocal.includes("education")) {
+          issuesLocal.push({
+            issue: "Education Section Missing",
+            severity: "error",
+            fix: "Add an 'Education' section detailing your degrees, school names, and graduation years."
+          });
+          fmtScoreLocal -= 15;
+        }
+        if (!sectionsLocal.includes("skills")) {
+          issuesLocal.push({
+            issue: "Skills Section Missing",
+            severity: "warning",
+            fix: "Incorporate a dedicated 'Skills' or 'Core Competencies' section to match resume keywords."
+          });
+          fmtScoreLocal -= 10;
+        }
+
+        const wordCount = resumeContent.trim().split(/\s+/).length;
+        if (wordCount < 100 && resumeContent.trim().length > 0) {
+          issuesLocal.push({
+            issue: "Resume content is too brief",
+            severity: "error",
+            fix: "Expand your resume bullet points. Provide detailed achievements, duties, and tools for each role."
+          });
+          fmtScoreLocal -= 15;
+        } else if (wordCount > 1500) {
+          issuesLocal.push({
+            issue: "Resume exceeds typical page count",
+            severity: "warning",
+            fix: "Your resume is very long. Consider condensing it to under 1000 words (approx 2 pages) for brevity."
+          });
+          fmtScoreLocal -= 10;
+        }
+
+        fmtScoreLocal = Math.max(10, fmtScoreLocal);
 
         // Generate templates / suggestions
         const matchedTemplate = Object.values(MOCK_DATA).find(
@@ -368,6 +552,10 @@ export default function Home() {
         let generatedBullets = [];
         if (matchedTemplate) {
           generatedBullets = matchedTemplate.bullets;
+        } else if (matchedFallbackKey) {
+          generatedBullets = MOCK_DATA[matchedFallbackKey].bullets;
+          setIsInferred(true);
+          setInferredTitle(MOCK_DATA[matchedFallbackKey].name);
         } else {
           const missingTextList = missing.map(m => m.toUpperCase());
           generatedBullets = [
@@ -398,6 +586,12 @@ export default function Home() {
         }
 
         setScore(finalScore);
+        setFormattingScore(fmtScoreLocal);
+        setHasEmail(hasEmailLocal);
+        setHasPhone(hasPhoneLocal);
+        setHasLinkedIn(hasLinkedInLocal);
+        setSectionsFound(sectionsLocal);
+        setFormattingIssues(issuesLocal);
         setMissingKeywords(missing.map(term => ({
           text: term.charAt(0).toUpperCase() + term.slice(1),
           type: 'hard'
@@ -405,8 +599,8 @@ export default function Home() {
         setBullets(generatedBullets);
       } catch (err) {
         console.error('Local fallback engine error:', err);
-        // Absolute fallback to prevent freezing
         setScore(45);
+        setFormattingScore(70);
         setMissingKeywords([{ text: 'Critical Thinking', type: 'hard' }]);
         setBullets([
           {
@@ -423,22 +617,38 @@ export default function Home() {
     }, 1500);
   };
 
-  // Animate Match Score gauge from 0 to actual score
+  // Animate Match Score and Formatting Score from 0 to actual scores
   useEffect(() => {
     if (analysisCompleted) {
-      let current = 0;
+      let currentScore = 0;
+      let currentFmt = 0;
       const interval = setInterval(() => {
-        current += 2;
-        if (current >= score) {
-          setAnimatedScore(score);
+        let updated = false;
+        if (currentScore < score) {
+          currentScore += 2;
+          if (currentScore >= score) {
+            setAnimatedScore(score);
+          } else {
+            setAnimatedScore(currentScore);
+            updated = true;
+          }
+        }
+        if (currentFmt < formattingScore) {
+          currentFmt += 2;
+          if (currentFmt >= formattingScore) {
+            setAnimatedFormattingScore(formattingScore);
+          } else {
+            setAnimatedFormattingScore(currentFmt);
+            updated = true;
+          }
+        }
+        if (!updated) {
           clearInterval(interval);
-        } else {
-          setAnimatedScore(current);
         }
       }, 15);
       return () => clearInterval(interval);
     }
-  }, [analysisCompleted, score]);
+  }, [analysisCompleted, score, formattingScore]);
 
   // Copy helper
   const handleCopy = (id: number, text: string) => {
@@ -702,50 +912,104 @@ export default function Home() {
                 // Analysis Completed view
                 <div className="flex flex-col gap-6 animate-fadeIn">
                   
-                  {/* Top Stats: Score & Summary Card */}
-                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center bg-slate-50 rounded-xl p-5 border border-slate-200">
-                    
-                    {/* Score (circular progress) */}
-                    <div className="sm:col-span-5 flex flex-col items-center justify-center gap-1">
-                      <div className="relative flex items-center justify-center">
-                        <svg className="w-24 h-24 transform -rotate-90">
-                          <circle
-                            cx="48"
-                            cy="48"
-                            r={radius}
-                            className="stroke-slate-200"
-                            strokeWidth="6"
-                            fill="transparent"
-                          />
-                          <circle
-                            cx="48"
-                            cy="48"
-                            r={radius}
-                            className="stroke-[#008080] transition-all duration-500 ease-out"
-                            strokeWidth="6"
-                            fill="transparent"
-                            strokeDasharray={circumference}
-                            strokeDashoffset={strokeDashoffset}
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                        <div className="absolute flex flex-col items-center justify-center text-center">
-                          <span className="text-xl font-black text-slate-900">{animatedScore}%</span>
-                          <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Score</span>
+                  {/* Job Title Inference Banner */}
+                  {isInferred && inferredTitle && (
+                    <div className="flex items-start gap-3 rounded-lg border border-teal-100 bg-teal-50/50 p-3.5 text-xs text-slate-700">
+                      <Sparkles className="h-4 w-4 text-[#008080] shrink-0 mt-0.5 animate-pulse" />
+                      <div>
+                        <span className="font-bold text-slate-900">Matcher Inference Mode:</span> We detected a brief input and dynamically generated industry requirements for <strong className="text-[#008080] font-bold">"{inferredTitle}"</strong> to compare your resume.
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Top Stats: Dual Score & Summary Card */}
+                  <div className="flex flex-col gap-4 bg-slate-50 rounded-xl p-5 border border-slate-200">
+                    <div className="grid grid-cols-2 gap-4 items-center justify-items-center">
+                      
+                      {/* Keyword Match Score */}
+                      <div className="flex flex-col items-center gap-1.5">
+                        <div className="relative flex items-center justify-center">
+                          <svg className="w-20 h-20 transform -rotate-90">
+                            <circle cx="40" cy="40" r="34" className="stroke-slate-200" strokeWidth="5" fill="transparent" />
+                            <circle
+                              cx="40"
+                              cy="40"
+                              r="34"
+                              className="stroke-[#008080] transition-all duration-500 ease-out"
+                              strokeWidth="5"
+                              fill="transparent"
+                              strokeDasharray={2 * Math.PI * 34}
+                              strokeDashoffset={2 * Math.PI * 34 - (animatedScore / 100) * (2 * Math.PI * 34)}
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                          <div className="absolute flex flex-col items-center justify-center text-center">
+                            <span className="text-sm font-black text-slate-900">{animatedScore}%</span>
+                            <span className="text-[7px] text-slate-400 font-bold uppercase tracking-wider">Match</span>
+                          </div>
                         </div>
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider text-center">Keyword Match</span>
+                      </div>
+
+                      {/* Formatting Audit Score */}
+                      <div className="flex flex-col items-center gap-1.5">
+                        <div className="relative flex items-center justify-center">
+                          <svg className="w-20 h-20 transform -rotate-90">
+                            <circle cx="40" cy="40" r="34" className="stroke-slate-200" strokeWidth="5" fill="transparent" />
+                            <circle
+                              cx="40"
+                              cy="40"
+                              r="34"
+                              className="stroke-[#006666] transition-all duration-500 ease-out"
+                              strokeWidth="5"
+                              fill="transparent"
+                              strokeDasharray={2 * Math.PI * 34}
+                              strokeDashoffset={2 * Math.PI * 34 - (animatedFormattingScore / 100) * (2 * Math.PI * 34)}
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                          <div className="absolute flex flex-col items-center justify-center text-center">
+                            <span className="text-sm font-black text-slate-900">{animatedFormattingScore}%</span>
+                            <span className="text-[7px] text-slate-400 font-bold uppercase tracking-wider">Format</span>
+                          </div>
+                        </div>
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider text-center">ATS Format</span>
                       </div>
                     </div>
 
                     {/* Quick feedback message */}
-                    <div className="sm:col-span-7 flex flex-col gap-2 text-center sm:text-left">
-                      <div className="flex items-center justify-center sm:justify-start gap-1.5 text-[#008080] text-sm font-semibold">
-                        <CheckCircle2 className="h-4 w-4" />
-                        <span>ATS Verification Approved</span>
+                    <div className="flex flex-col gap-1 pt-3 border-t border-slate-200/60 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-1.5 text-[#008080] text-xs font-bold uppercase tracking-wider">
+                        <CheckCircle2 className="h-3.5 w-3.5" />
+                        <span>ATS Audit Completed</span>
                       </div>
-                      <p className="text-xs text-slate-600 leading-relaxed">
-                        Your layout matches core requirements well. Inject the missing keywords and optimize your bullets to push this matching score above <span className="text-[#008080] font-bold">90%</span>.
+                      <p className="text-xs text-slate-600 leading-normal font-normal">
+                        {animatedScore >= 80 && animatedFormattingScore >= 80 
+                          ? "Excellent! Your resume has very high keyword match alignment and meets standard ATS formatting rules."
+                          : "Improve your scoring by addressing the formatting checklist and missing keywords below."}
                       </p>
                     </div>
+                  </div>
+
+                  {/* Brag & Share Card */}
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-xl border border-teal-100 bg-teal-50/30">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="h-4 w-4 text-[#008080] shrink-0" />
+                      <div className="flex flex-col text-left">
+                        <span className="text-xs font-bold text-slate-800">Share Scorecard</span>
+                        <span className="text-[10px] text-slate-500">Copy referral post for LinkedIn or X/Twitter.</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        const bragText = `🎯 I just audited my resume using ResumeMatch AI and got a ${animatedScore}% Match & ${animatedFormattingScore}% ATS formatting score! Check your compatibility for free: https://resumematch-ai.vercel.app/ #ResumeMatch #ATSChecker`;
+                        navigator.clipboard.writeText(bragText);
+                        alert("Brag post copied successfully! Paste on LinkedIn or X/Twitter.");
+                      }}
+                      className="w-full sm:w-auto px-3.5 py-1.5 rounded bg-[#008080] hover:bg-[#006666] text-white text-xs font-bold transition-all cursor-pointer shadow-sm text-center"
+                    >
+                      Brag on Socials
+                    </button>
                   </div>
 
                   {/* Missing Keywords Box */}
@@ -816,6 +1080,61 @@ export default function Home() {
                     </div>
                   </div>
 
+                  {/* ATS Formatting Audit Checklist */}
+                  <div className="flex flex-col gap-3">
+                    <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <ListChecks className="h-3.5 w-3.5 text-[#008080]" />
+                      ATS Readability Checklist ({formattingIssues.length} warnings)
+                    </h3>
+                    
+                    <div className="flex flex-col gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200">
+                      
+                      {/* Checklist items */}
+                      <div className="grid grid-cols-2 gap-2 pb-3.5 border-b border-slate-200/60">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {hasEmail ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
+                          <span>Email address</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {hasPhone ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
+                          <span>Phone number</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {hasLinkedIn ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />}
+                          <span>LinkedIn Link</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {sectionsFound.includes('experience') ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
+                          <span>Experience section</span>
+                        </div>
+                      </div>
+
+                      {/* Formatting issues warnings */}
+                      <div className="flex flex-col gap-2.5 max-h-[180px] overflow-y-auto pr-1">
+                        {formattingIssues.length > 0 ? (
+                          formattingIssues.map((issue, idx) => (
+                            <div key={idx} className="flex gap-2 text-xs text-slate-600 bg-white rounded border border-slate-200 p-2.5 shadow-sm">
+                              {issue.severity === 'error' ? (
+                                <X className="h-4 w-4 text-rose-500 shrink-0 mt-0.5" />
+                              ) : (
+                                <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                              )}
+                              <div className="flex flex-col gap-0.5">
+                                <span className="font-bold text-slate-900 text-[11px]">{issue.issue}</span>
+                                <p className="text-[10px] text-slate-500 leading-normal font-normal">{issue.fix}</p>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-xs text-[#008080] italic flex items-center gap-1.5 font-medium">
+                            <CheckCircle2 className="h-4 w-4" />
+                            <span>No formatting warnings found! Document is fully ATS-readable.</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Tailored Bullet Point Suggestions */}
                   <div className="flex flex-col gap-3">
                     <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -825,7 +1144,7 @@ export default function Home() {
 
                     <div className="flex flex-col gap-4 max-h-[350px] overflow-y-auto pr-1">
                       {bullets.map((bullet) => (
-                        <div key={bullet.id} className="rounded-lg border border-slate-200 bg-white p-4.5 flex flex-col gap-3">
+                        <div key={bullet.id} className="rounded-lg border border-slate-200 bg-white p-4.5 flex flex-col gap-3 hover:border-slate-300 transition-all">
                           
                           {/* Original line */}
                           <div className="flex flex-col gap-1">
@@ -840,7 +1159,7 @@ export default function Home() {
                           {/* Tailored suggestion */}
                           <div className="flex flex-col gap-1.5 mt-1">
                             <div className="flex items-center justify-between">
-                              <span className="text-[9px] font-bold text-teal-700 uppercase tracking-wider flex items-center gap-1">
+                              <span className="text-[9px] font-bold text-[#008080] uppercase tracking-wider flex items-center gap-1">
                                 <Sparkles className="h-3 w-3 text-[#008080]" /> Tailored AI Rewrite
                               </span>
                               <button
@@ -880,6 +1199,56 @@ export default function Home() {
           </div>
 
         </div>
+
+        {/* SEO FAQ & ATS Guidelines Section */}
+        <section className="mt-12 border-t border-slate-200 pt-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-lg font-bold text-slate-800 text-center tracking-tight mb-1">
+              Frequently Asked Questions &amp; ATS Guidelines
+            </h2>
+            <p className="text-xs text-slate-400 text-center mb-6">
+              Learn how applicant tracking systems read resumes and improve your compatibility rating.
+            </p>
+
+            <div className="flex flex-col gap-3">
+              {[
+                {
+                  q: "How does the ResumeMatch AI Checker calculate the scores?",
+                  a: "The tool evaluates resumes using two scanning metrics: Keyword Match Rate (which semantically scans your resume content against job qualifications) and ATS Formatting Readiness (which verifies layout structure, section headings, and contact info). Together, they define your overall compatibility rating."
+                },
+                {
+                  q: "Will columns, tables, or graphics cause an ATS to reject my resume?",
+                  a: "Yes. Many older parsers (such as Workday, Taleo, or Greenhouse) scan text left-to-right across the page. In multi-column or table layouts, this mixes text from different sections together, resulting in unreadable content. To ensure compatibility, use a standard, single-column text layout without tables."
+                },
+                {
+                  q: "Does Google Careers use an Applicant Tracking System (ATS)?",
+                  a: "Google uses its own proprietary applicant tracking and parsing system. Like Workday or other major ATS engines, it is designed to extract professional headers, education history, and key tools. Optimizing your resume format ensures Google's algorithms index your skills correctly."
+                },
+                {
+                  q: "What document format is best for ATS compatibility?",
+                  a: "A standard PDF or Microsoft Word (.docx) file is best. Always ensure your PDF has selectable, highlightable text (not scanned as an image). Plain text (.txt) files are also 100% readable but lack visual styling for human reviewers."
+                }
+              ].map((faq, index) => (
+                <div key={index} className="rounded-lg border border-slate-200 bg-white overflow-hidden shadow-sm transition-all duration-200 hover:border-slate-300">
+                  <button
+                    onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                    className="w-full flex items-center justify-between p-4 text-left text-xs sm:text-sm font-bold text-slate-800 hover:bg-slate-50 transition-colors cursor-pointer"
+                  >
+                    <span>{faq.q}</span>
+                    <span className="text-[#008080] font-extrabold text-base leading-none ml-4 select-none">
+                      {expandedFaq === index ? '−' : '+'}
+                    </span>
+                  </button>
+                  {expandedFaq === index && (
+                    <div className="p-4 pt-0 text-xs text-slate-500 leading-relaxed border-t border-slate-100 bg-[#f8f9fa] animate-fadeIn">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* Footer */}
