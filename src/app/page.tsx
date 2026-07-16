@@ -212,6 +212,60 @@ Skills: Patient care, nursing, CPR, Microsoft Word.`,
   }
 };
 
+// Helper to dynamically load external scripts safely in the browser (client-side only)
+const loadScript = (src: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined') {
+      resolve();
+      return;
+    }
+    if (document.querySelector(`script[src="${src}"]`)) {
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+    document.body.appendChild(script);
+  });
+};
+
+// Text extraction from PDF using PDF.js
+const extractTextFromPdf = async (file: File): Promise<string> => {
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+  const pdfjsLib = (window as any).pdfjsLib;
+  if (!pdfjsLib) throw new Error('PDF.js library is not available');
+  
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  
+  const arrayBuffer = await file.arrayBuffer();
+  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+  const pdf = await loadingTask.promise;
+  
+  let fullText = '';
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+    const pageText = textContent.items
+      .map((item: any) => item.str)
+      .join(' ');
+    fullText += pageText + '\n';
+  }
+  return fullText.trim();
+};
+
+// Text extraction from DOCX using Mammoth.js
+const extractTextFromDocx = async (file: File): Promise<string> => {
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');
+  const mammoth = (window as any).mammoth;
+  if (!mammoth) throw new Error('Mammoth.js library is not available');
+  
+  const arrayBuffer = await file.arrayBuffer();
+  const result = await mammoth.extractRawText({ arrayBuffer });
+  return result.value.trim();
+};
+
 export default function Home() {
   const [jobDescription, setJobDescription] = useState('');
   const [resumeContent, setResumeContent] = useState('');
@@ -286,17 +340,31 @@ export default function Home() {
         };
         reader.readAsText(file);
       } else {
-        // PDF/DOCX simulated text extraction
+        // Real PDF/DOCX text extraction
         setIsAnalyzing(true);
-        setTimeout(() => {
-          setIsAnalyzing(false);
-          let nameClean = file.name.split('.')[0].replace(/[-_]/g, ' ');
-          nameClean = nameClean.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-          
-          let docText = `${nameClean}\njohn.doe@example.com | (555) 0199 | linkedin.com/in/johndoe\n\n=== Work Experience ===\n- Built web pages using React and CSS.\n- Maintained web applications and worked with APIs.\n- Collaborated on team products.\n\n=== Education ===\nBachelor of Science in Computer Science, State University\n\n=== Skills ===\nHTML, CSS, JavaScript, React, Git, communication.`;
-          setResumeContent(docText);
-          setActiveTab('paste');
-        }, 1200);
+        
+        const extractText = async () => {
+          try {
+            let extractedText = '';
+            if (fileExtension === 'pdf') {
+              extractedText = await extractTextFromPdf(file);
+            } else if (fileExtension === 'docx') {
+              extractedText = await extractTextFromDocx(file);
+            } else {
+              throw new Error('Unsupported file format');
+            }
+            
+            setResumeContent(extractedText);
+            setActiveTab('paste');
+          } catch (error) {
+            console.error('Failed to extract text from file:', error);
+            alert('Failed to extract text from your file. Please ensure it is a readable document, or try copying and pasting the text directly.');
+          } finally {
+            setIsAnalyzing(false);
+          }
+        };
+        
+        extractText();
       }
     }
   };
