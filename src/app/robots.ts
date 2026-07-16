@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://resumematch-ai.vercel.app/sitemap.xml',
+    sitemap: 'https://interviewready-ai.vercel.app/sitemap.xml',
   };
 }

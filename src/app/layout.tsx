@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "google careers resume checker",
     "google ats resume checker",
     "free ats resume scanner",
-    "resume matcher",
+    "interview ready",
     "ats checker online",
     "resume formatting audit",
     "resume keywords match",
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Google ATS Resume Checker & Auditor | Free Compatibility Scan",
     description: "Audit your resume structure and keyword density against top industry criteria with a free real-time ATS match rating.",
-    url: "https://resumematch-ai.vercel.app",
-    siteName: "Google ATS Assistant",
+    url: "https://interviewready-ai.vercel.app",
+    siteName: "InterviewReady",
     locale: "en_US",
     type: "website",
   },
@@ -53,13 +53,13 @@ export default function RootLayout({
   const jsonLdData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "ResumeMatch AI",
-    "url": "https://resumematch-ai.vercel.app",
+    "name": "InterviewReady",
+    "url": "https://interviewready-ai.vercel.app",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://resumematch-ai.vercel.app/?q={search_term_string}"
+        "urlTemplate": "https://interviewready-ai.vercel.app/?q={search_term_string}"
       },
       "query-input": "required name=search_term_string"
     }
@@ -69,7 +69,7 @@ export default function RootLayout({
   const softwareSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "ResumeMatch AI",
+    "name": "InterviewReady",
     "operatingSystem": "All",
     "applicationCategory": "BusinessApplication",
     "offers": {

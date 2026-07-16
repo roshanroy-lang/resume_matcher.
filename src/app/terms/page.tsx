@@ -32,20 +32,20 @@ export default function TermsOfService() {
         {/* Content */}
         <div className="space-y-6 text-sm text-slate-600 leading-relaxed font-normal">
           <p>
-            By accessing and using the ResumeMatch AI website and parsing engine, you agree to comply with and be bound by the following terms and conditions. Please read these terms carefully before utilizing our services.
+            By accessing and using the InterviewReady website and parsing engine, you agree to comply with and be bound by the following terms and conditions. Please read these terms carefully before utilizing our services.
           </p>
 
           <section className="space-y-2">
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">1. Acceptance of Terms</h2>
             <p>
-              By accessing this web application, you represent that you accept these terms in full. If you disagree with any portion of these Terms of Service, you must discontinue your use of ResumeMatch AI.
+              By accessing this web application, you represent that you accept these terms in full. If you disagree with any portion of these Terms of Service, you must discontinue your use of InterviewReady.
             </p>
           </section>
 
           <section className="space-y-2">
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">2. Permitted Use &amp; Limitations</h2>
             <p>
-              ResumeMatch AI provides a free toolkit designed to help job applicants analyze keyword density and review resume structure. You may use this tool for personal, non-commercial purposes. 
+              InterviewReady provides a free toolkit designed to help job applicants analyze keyword density and review resume structure. You may use this tool for personal, non-commercial purposes. 
             </p>
             <p>
               You agree not to attempt to scrape, reverse engineer, flood, or abuse our backend API routes, or use the tool to programmatically generate spam resumes.
@@ -55,7 +55,7 @@ export default function TermsOfService() {
           <section className="space-y-2">
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">3. Disclaimer of Warranties</h2>
             <p>
-              The match scores, compatibility ratings, and bullet tailoring provided by ResumeMatch AI are simulated results based on statistical keyword checks and semantic AI algorithms. We do not guarantee that using this tool will result in job offers, hiring approvals, or passing real corporate applicant tracking filters.
+              The match scores, compatibility ratings, and bullet tailoring provided by InterviewReady are simulated results based on statistical keyword checks and semantic AI algorithms. We do not guarantee that using this tool will result in job offers, hiring approvals, or passing real corporate applicant tracking filters.
             </p>
             <p>
               The service is provided on an &quot;as is&quot; and &quot;as available&quot; basis without warranties of any kind.

@@ -32,13 +32,13 @@ export default function PrivacyPolicy() {
         {/* Content */}
         <div className="space-y-6 text-sm text-slate-600 leading-relaxed font-normal">
           <p>
-            Welcome to ResumeMatch AI. Your privacy is critically important to us. This Privacy Policy details how we handle the data you input when using our resume checking tools.
+            Welcome to InterviewReady. Your privacy is critically important to us. This Privacy Policy details how we handle the data you input when using our resume checking tools.
           </p>
 
           <section className="space-y-2">
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">1. Data Collection &amp; Privacy</h2>
             <p>
-              ResumeMatch AI is built as a client-first parsing utility. We do not save, store, or harvest any resumes, CV texts, job descriptions, or personal information uploaded or pasted onto our dashboard. 
+              InterviewReady is built as a client-first parsing utility. We do not save, store, or harvest any resumes, CV texts, job descriptions, or personal information uploaded or pasted onto our dashboard. 
             </p>
             <p>
               Any text uploaded to the site is processed in temporary runtime memory solely for the purpose of generating your compatibility rating and tailored AI recommendations. Once you close or reload the browser session, your data is permanently cleared.

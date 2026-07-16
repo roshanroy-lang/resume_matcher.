@@ -1,6 +1,6 @@
-# ResumeMatch AI - AI-Powered Resume Matcher & Tailor Engine
+# InterviewReady - AI-Powered Resume Matcher & Tailor Engine
 
-**ResumeMatch AI** is a responsive, minimalist frontend dashboard designed to help job applicants optimize their resumes for Applicant Tracking Systems (ATS) in seconds. By aligning resume bullets directly with job descriptions, users can instantly scan compatibility, view missing keywords, and get tailored AI-style bullet rewrites.
+**InterviewReady** is a responsive, minimalist frontend dashboard designed to help job applicants optimize their resumes for Applicant Tracking Systems (ATS) in seconds. By aligning resume bullets directly with job descriptions, users can instantly scan compatibility, view missing keywords, and get tailored AI-style bullet rewrites.
 
 The design implements a clean, high-contrast, light-mode teal aesthetic matching the layout specifications of premium software dashboards.
 
@@ -31,8 +31,8 @@ Follow these steps to run the project locally on your machine:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/roshanroy-lang/resume_matcher..git
-   cd resume_matcher
+   git clone https://github.com/roshanroy-lang/interview-ready.git
+   cd interview-ready
    ```
 
 2. **Install dependencies**:
@@ -58,7 +58,7 @@ Follow these steps to run the project locally on your machine:
 The project is optimized for deployment on the [Vercel Platform](https://vercel.com/):
 
 1. Log into Vercel and link your GitHub account.
-2. Select **Import Project** and choose the `resume_matcher.` repository.
+2. Select **Import Project** and choose the `interview-ready` repository.
 3. Vercel will auto-detect Next.js and build the application.
 4. (Optional) Turn on **Vercel Web Analytics** in your project dashboard with one click to monitor visitors and user engagement.
 

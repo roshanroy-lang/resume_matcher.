@@ -1,6 +1,6 @@
-# ResumeMatch AI - Resume Optimizer & ATS Matcher
+# InterviewReady - Resume Optimizer & ATS Matcher
 
-ResumeMatch AI is a web application designed to help job seekers compare their resumes against target job descriptions and optimize them for Applicant Tracking Systems (ATS).
+InterviewReady is a web application designed to help job seekers compare their resumes against target job descriptions and optimize them for Applicant Tracking Systems (ATS).
 
 ## Core Capabilities
 - **Resume Text Scanning**: Analyzes resume content against key requirements, terms, and competencies from a job description.

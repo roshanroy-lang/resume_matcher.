@@ -696,13 +696,13 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <Image
               src="/logo.png"
-              alt="ResumeMatch Logo"
+              alt="InterviewReady Logo"
               width={36}
               height={36}
               className="rounded-lg shadow-sm"
             />
             <span className="text-lg font-bold text-slate-900 tracking-tight">
-              ResumeMatch
+              InterviewReady
             </span>
           </div>
 
@@ -730,7 +730,7 @@ export default function Home() {
               <span className="text-[#008080]">for any industry or profession.</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-500 max-w-2xl font-normal leading-relaxed">
-              ResumeMatch compares your profile content against key requirements in any field in real-time, delivering compatibility metrics and tailored copywriting improvements.
+              InterviewReady compares your profile content against key requirements in any field in real-time, delivering compatibility metrics and tailored copywriting improvements.
             </p>
           </div>
           
@@ -1013,7 +1013,7 @@ export default function Home() {
                     </div>
                     <button
                       onClick={() => {
-                        const bragText = `🎯 I just audited my resume using ResumeMatch AI and got a ${animatedScore}% Match & ${animatedFormattingScore}% ATS formatting score! Check your compatibility for free: https://resumematch-ai.vercel.app/ #ResumeMatch #ATSChecker`;
+                        const bragText = `🎯 I just audited my resume using InterviewReady and got a ${animatedScore}% Match & ${animatedFormattingScore}% ATS formatting score! Check your compatibility for free: https://interviewready-ai.vercel.app/ #InterviewReady #ATSChecker`;
                         navigator.clipboard.writeText(bragText);
                         alert("Brag post copied successfully! Paste on LinkedIn or X/Twitter.");
                       }}
@@ -1230,7 +1230,7 @@ export default function Home() {
             <div className="flex flex-col gap-3">
               {[
                 {
-                  q: "How does the ResumeMatch AI Checker calculate the scores?",
+                  q: "How does the InterviewReady Checker calculate the scores?",
                   a: "The tool evaluates resumes using two scanning metrics: Keyword Match Rate (which semantically scans your resume content against job qualifications) and ATS Formatting Readiness (which verifies layout structure, section headings, and contact info). Together, they define your overall compatibility rating."
                 },
                 {
@@ -1271,7 +1271,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="w-full border-t border-slate-200/80 py-6 bg-white mt-auto">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <p>&copy; 2026 ResumeMatch AI. Built for recruitment engineering.</p>
+          <p>&copy; 2026 InterviewReady. Built for recruitment engineering.</p>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="hover:underline cursor-pointer">Privacy Policy</Link>
             <Link href="/terms" className="hover:underline cursor-pointer">Terms of Service</Link>
