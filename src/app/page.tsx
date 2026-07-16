@@ -496,77 +496,88 @@ export default function Home() {
         if (/(projects|portfolio)/i.test(resLower)) sectionsLocal.push("projects");
         if (/(certifications|certificates|awards)/i.test(resLower)) sectionsLocal.push("certifications");
 
+        const wordCount = resumeContent.trim().split(/\s+/).filter(Boolean).length;
+        const isNotResumeLocal = (wordCount < 10) || (!hasEmailLocal && !hasPhoneLocal && sectionsLocal.length === 0);
+
         const issuesLocal: {issue: string, severity: 'error' | 'warning', fix: string}[] = [];
         let fmtScoreLocal = 100;
 
-        if (!hasEmailLocal) {
+        if (isNotResumeLocal) {
+          fmtScoreLocal = 0;
           issuesLocal.push({
-            issue: "Missing Contact Email",
+            issue: "Invalid Resume Document",
             severity: "error",
-            fix: "Add a professional email address (e.g., name@email.com) in the header of your resume."
+            fix: "The uploaded file does not appear to be a valid resume. Please upload a document that contains your contact information and sections such as Work Experience, Education, or Skills."
           });
-          fmtScoreLocal -= 15;
-        }
-        if (!hasPhoneLocal) {
-          issuesLocal.push({
-            issue: "Missing Phone Number",
-            severity: "error",
-            fix: "Include a valid contact phone number so recruiters can easily contact you for interviews."
-          });
-          fmtScoreLocal -= 15;
-        }
-        if (!hasLinkedInLocal) {
-          issuesLocal.push({
-            issue: "Missing Professional Profile Link",
-            severity: "warning",
-            fix: "Add your LinkedIn URL or online portfolio link to provide recruiters with more background."
-          });
-          fmtScoreLocal -= 10;
-        }
+        } else {
+          if (!hasEmailLocal) {
+            issuesLocal.push({
+              issue: "Missing Contact Email",
+              severity: "error",
+              fix: "Add a professional email address (e.g., name@email.com) in the header of your resume."
+            });
+            fmtScoreLocal -= 15;
+          }
+          if (!hasPhoneLocal) {
+            issuesLocal.push({
+              issue: "Missing Phone Number",
+              severity: "error",
+              fix: "Include a valid contact phone number so recruiters can easily contact you for interviews."
+            });
+            fmtScoreLocal -= 15;
+          }
+          if (!hasLinkedInLocal) {
+            issuesLocal.push({
+              issue: "Missing Professional Profile Link",
+              severity: "warning",
+              fix: "Add your LinkedIn URL or online portfolio link to provide recruiters with more background."
+            });
+            fmtScoreLocal -= 10;
+          }
 
-        if (!sectionsLocal.includes("experience")) {
-          issuesLocal.push({
-            issue: "Work Experience Section Missing",
-            severity: "error",
-            fix: "Create a distinct 'Work Experience' section with standard headers to list your employment history."
-          });
-          fmtScoreLocal -= 20;
-        }
-        if (!sectionsLocal.includes("education")) {
-          issuesLocal.push({
-            issue: "Education Section Missing",
-            severity: "error",
-            fix: "Add an 'Education' section detailing your degrees, school names, and graduation years."
-          });
-          fmtScoreLocal -= 15;
-        }
-        if (!sectionsLocal.includes("skills")) {
-          issuesLocal.push({
-            issue: "Skills Section Missing",
-            severity: "warning",
-            fix: "Incorporate a dedicated 'Skills' or 'Core Competencies' section to match resume keywords."
-          });
-          fmtScoreLocal -= 10;
-        }
+          if (!sectionsLocal.includes("experience")) {
+            issuesLocal.push({
+              issue: "Work Experience Section Missing",
+              severity: "error",
+              fix: "Create a distinct 'Work Experience' section with standard headers to list your employment history."
+            });
+            fmtScoreLocal -= 20;
+          }
+          if (!sectionsLocal.includes("education")) {
+            issuesLocal.push({
+              issue: "Education Section Missing",
+              severity: "error",
+              fix: "Add an 'Education' section detailing your degrees, school names, and graduation years."
+            });
+            fmtScoreLocal -= 15;
+          }
+          if (!sectionsLocal.includes("skills")) {
+            issuesLocal.push({
+              issue: "Skills Section Missing",
+              severity: "warning",
+              fix: "Incorporate a dedicated 'Skills' or 'Core Competencies' section to match resume keywords."
+            });
+            fmtScoreLocal -= 10;
+          }
 
-        const wordCount = resumeContent.trim().split(/\s+/).length;
-        if (wordCount < 100 && resumeContent.trim().length > 0) {
-          issuesLocal.push({
-            issue: "Resume content is too brief",
-            severity: "error",
-            fix: "Expand your resume bullet points. Provide detailed achievements, duties, and tools for each role."
-          });
-          fmtScoreLocal -= 15;
-        } else if (wordCount > 1500) {
-          issuesLocal.push({
-            issue: "Resume exceeds typical page count",
-            severity: "warning",
-            fix: "Your resume is very long. Consider condensing it to under 1000 words (approx 2 pages) for brevity."
-          });
-          fmtScoreLocal -= 10;
-        }
+          if (wordCount < 100 && resumeContent.trim().length > 0) {
+            issuesLocal.push({
+              issue: "Resume content is too brief",
+              severity: "error",
+              fix: "Expand your resume bullet points. Provide detailed achievements, duties, and tools for each role."
+            });
+            fmtScoreLocal -= 15;
+          } else if (wordCount > 1500) {
+            issuesLocal.push({
+              issue: "Resume exceeds typical page count",
+              severity: "warning",
+              fix: "Your resume is very long. Consider condensing it to under 1000 words (approx 2 pages) for brevity."
+            });
+            fmtScoreLocal -= 10;
+          }
 
-        fmtScoreLocal = Math.max(10, fmtScoreLocal);
+          fmtScoreLocal = Math.max(10, fmtScoreLocal);
+        }
 
         // 2. Perform job classification and match score calculations
         const isJobTitleInput = jobDescription.trim().split(/\s+/).length < 12;
@@ -589,7 +600,11 @@ export default function Home() {
         let missing: {text: string, type: string}[] = [];
         let generatedBullets: any[] = [];
 
-        if (isJobTitleInput && !matchedFallbackKey) {
+        if (isNotResumeLocal) {
+          finalScore = 0;
+          missing = [];
+          generatedBullets = [];
+        } else if (isJobTitleInput && !matchedFallbackKey) {
           finalScore = 0;
           missing = [];
           generatedBullets = [];
