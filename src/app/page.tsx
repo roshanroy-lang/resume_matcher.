@@ -798,23 +798,23 @@ export default function Home() {
                   </label>
                   
                   {/* Tabs */}
-                  <div className="flex gap-4">
+                  <div className="flex rounded-lg bg-slate-200/50 p-1 border border-[#1A1A1A]/10">
                     <button
                       onClick={() => setActiveTab('paste')}
-                      className={`pb-1.5 text-[10px] font-bold uppercase tracking-wider transition-all border-b-2 cursor-pointer ${
+                      className={`px-4 py-1.5 text-xs rounded-md font-semibold transition-all duration-200 cursor-pointer ${
                         activeTab === 'paste' 
-                          ? 'border-[#008080] text-[#008080]' 
-                          : 'border-transparent text-slate-400 hover:text-slate-700'
+                          ? 'bg-[#008080] text-white shadow-sm scale-[1.02]' 
+                          : 'text-slate-500 hover:text-slate-850 hover:bg-slate-200/50'
                       }`}
                     >
                       Paste Text
                     </button>
                     <button
                       onClick={() => setActiveTab('upload')}
-                      className={`pb-1.5 text-[10px] font-bold uppercase tracking-wider transition-all border-b-2 cursor-pointer ${
+                      className={`px-4 py-1.5 text-xs rounded-md font-semibold transition-all duration-200 cursor-pointer ${
                         activeTab === 'upload' 
-                          ? 'border-[#008080] text-[#008080]' 
-                          : 'border-transparent text-slate-400 hover:text-slate-700'
+                          ? 'bg-[#008080] text-white shadow-sm scale-[1.02]' 
+                          : 'text-slate-500 hover:text-slate-850 hover:bg-slate-200/50'
                       }`}
                     >
                       Upload File
