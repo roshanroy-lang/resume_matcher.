@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --card-bg: #ffffff;
-  --card-border: #e2e8f0;
+  --background: #0E1017;
+  --foreground: #F1F5F9;
+  --card-bg: #151821;
+  --card-border: rgba(255, 255, 255, 0.06);
 }
 
 @theme inline {
@@ -12,8 +12,7 @@
   --color-foreground: var(--foreground);
   --color-card-bg: var(--card-bg);
   --color-card-border: var(--card-border);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
@@ -24,33 +23,32 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom scrollbar for premium light theme */
+/* Custom premium scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(241, 245, 249, 0.6);
+  background: rgba(14, 16, 23, 0.6);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+  background: rgba(255, 255, 255, 0.2);
 }
 
-/* Minimalist Clean panels */
+/* Human-designed clean outline panels (minimalist flat design, no tacky neon glows) */
 .glass-panel {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+  border-color: rgba(255, 255, 255, 0.12);
+  background: #171B26;
 }
 
 /* Circular Progress Animation */
@@ -61,5 +59,5 @@ body {
 }
 
 .animate-progress {
-  animation: progress 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: progress 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
