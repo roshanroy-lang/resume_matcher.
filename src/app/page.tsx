@@ -489,12 +489,12 @@ export default function Home() {
         
         const sectionsLocal: string[] = [];
         const resLower = resumeContent.toLowerCase();
-        if (/(experience|history|employment|work)/i.test(resLower)) sectionsLocal.push("experience");
-        if (/(education|university|college|degree)/i.test(resLower)) sectionsLocal.push("education");
-        if (/(skills|technologies|tools|languages)/i.test(resLower)) sectionsLocal.push("skills");
-        if (/(summary|profile|about)/i.test(resLower)) sectionsLocal.push("summary");
-        if (/(projects|portfolio)/i.test(resLower)) sectionsLocal.push("projects");
-        if (/(certifications|certificates|awards)/i.test(resLower)) sectionsLocal.push("certifications");
+        if (/\b(experience|history|employment|work)\b/i.test(resLower)) sectionsLocal.push("experience");
+        if (/\b(education|university|college|degree)\b/i.test(resLower)) sectionsLocal.push("education");
+        if (/\b(skills|technologies|tools|languages)\b/i.test(resLower)) sectionsLocal.push("skills");
+        if (/\b(summary|profile|about)\b/i.test(resLower)) sectionsLocal.push("summary");
+        if (/\b(projects|portfolio)\b/i.test(resLower)) sectionsLocal.push("projects");
+        if (/\b(certifications|certificates|awards)\b/i.test(resLower)) sectionsLocal.push("certifications");
 
         const wordCount = resumeContent.trim().split(/\s+/).filter(Boolean).length;
         const isNotResumeLocal = (wordCount < 10) || (!hasEmailLocal && !hasPhoneLocal && sectionsLocal.length === 0);
