@@ -725,9 +725,9 @@ export default function Home() {
         {/* Title area */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-[#1A1A1A]/10 pb-8">
           <div className="max-w-3xl">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black text-[#1A1A1A] tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-sans font-black text-[#1A1A1A] tracking-tight leading-tight">
               Optimize your resume <br />
-              <span className="text-[#008080] italic">for any industry or profession.</span>
+              <span className="text-[#008080]">for any industry or profession.</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl font-normal leading-relaxed">
               InterviewReady compares your profile content against key requirements in any field in real-time, delivering compatibility metrics and tailored copywriting improvements.
