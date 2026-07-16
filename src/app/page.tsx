@@ -701,7 +701,7 @@ export default function Home() {
               height={36}
               className="rounded-lg shadow-sm"
             />
-            <span className="text-lg font-bold text-slate-900 tracking-tight">
+            <span className="text-xl font-serif font-black text-slate-900 tracking-tight">
               InterviewReady
             </span>
           </div>
@@ -720,19 +720,21 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 flex-grow flex flex-col gap-10 relative z-10">
+      <main className="w-full py-12 flex-grow flex flex-col gap-10 relative z-10">
         
-        {/* Title area */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-200/60 pb-8">
-          <div className="max-w-3xl">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-              Optimize your resume <br />
-              <span className="text-[#008080]">for any industry or profession.</span>
-            </h1>
-            <p className="mt-4 text-base sm:text-lg text-slate-500 max-w-2xl font-normal leading-relaxed">
-              InterviewReady compares your profile content against key requirements in any field in real-time, delivering compatibility metrics and tailored copywriting improvements.
-            </p>
-          </div>
+        {/* Hero Area */}
+        <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8 flex flex-col gap-8">
+          {/* Title area */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-200/60 pb-8">
+            <div className="max-w-3xl">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-black text-slate-900 tracking-tight leading-tight">
+                Optimize your resume <br />
+                <span className="text-[#008080] italic">for any industry or profession.</span>
+              </h1>
+              <p className="mt-4 text-base sm:text-lg text-slate-500 max-w-2xl font-normal leading-relaxed">
+                InterviewReady compares your profile content against key requirements in any field in real-time, delivering compatibility metrics and tailored copywriting improvements.
+              </p>
+            </div>
           
           {/* Quick industry selector widget */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm self-start lg:self-auto">
@@ -765,9 +767,29 @@ export default function Home() {
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Dashboard Grid split screen */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Ad Placement #1: Top Leaderboard Banner */}
+        <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="ad-slot ad-slot-leaderboard">
+            <span className="text-[10px] font-bold text-slate-400 mt-3">AdSpace (728x90 Leaderboard Banner)</span>
+          </div>
+        </div>
+
+        {/* 3-Column Layout: Left Skyscraper | Main Content | Right Skyscraper */}
+        <div className="flex justify-center items-start gap-8 w-full max-w-[1440px] mx-auto px-4">
+          
+          {/* Left Skyscraper Gutter */}
+          <div className="hidden 2xl:block shrink-0 pt-4">
+            <div className="ad-slot ad-slot-skyscraper">
+              <span className="text-[10px] font-bold text-slate-400 mt-3">AdSpace (160x600 Skyscraper)</span>
+            </div>
+          </div>
+
+          {/* Main Dashboard Panel */}
+          <div className="flex-grow max-w-5xl flex flex-col gap-10">
+            {/* Dashboard Grid split screen */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Panel: Inputs */}
           <div className="lg:col-span-6 flex flex-col gap-6">
@@ -1150,6 +1172,25 @@ export default function Home() {
                         )}
                       </div>
                     </div>
+
+                    {/* Ad Placement #3: Native Sponsored Ad Card */}
+                    <div className="ad-slot ad-slot-native bg-slate-50/50 border border-dashed border-slate-200 rounded-xl p-4 flex flex-col justify-between">
+                      <div className="flex flex-col text-left gap-1">
+                        <span className="text-[8px] font-bold text-[#008080] uppercase tracking-widest">Sponsored Link</span>
+                        <span className="text-xs font-bold text-slate-800">Want professional ATS reviews & tailored rewriting?</span>
+                        <p className="text-[10px] text-slate-500 leading-normal">
+                          Get a dedicated career coach to rewrite your CV/Resume with guaranteed hiring responses. 
+                        </p>
+                      </div>
+                      <a 
+                        href="https://resume-matcher-sepia.vercel.app/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="mt-3 text-center py-1.5 px-3 rounded border border-slate-200 bg-white hover:bg-slate-50 text-[10px] font-bold text-slate-700 transition-all cursor-pointer shadow-sm"
+                      >
+                        Explore Professional Packages
+                      </a>
+                    </div>
                   </div>
 
                   {/* Tailored Bullet Point Suggestions */}
@@ -1215,12 +1256,28 @@ export default function Home() {
             </div>
           </div>
 
+            </div>
+          </div>
+
+          {/* Right Skyscraper Gutter */}
+          <div className="hidden 2xl:block shrink-0 pt-4">
+            <div className="ad-slot ad-slot-skyscraper">
+              <span className="text-[10px] font-bold text-slate-400 mt-3">AdSpace (160x600 Skyscraper)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Ad Placement #4: Large Horizontal Bottom Banner */}
+        <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="ad-slot ad-slot-banner-bottom">
+            <span className="text-[10px] font-bold text-slate-400 mt-3">AdSpace (970x90 Large Bottom Banner)</span>
+          </div>
         </div>
 
         {/* SEO FAQ & ATS Guidelines Section */}
-        <section className="mt-12 border-t border-slate-200 pt-8">
+        <section className="mt-12 border-t border-slate-200 pt-8 mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-lg font-bold text-slate-800 text-center tracking-tight mb-1">
+            <h2 className="text-2xl font-serif font-black text-slate-900 text-center tracking-tight mb-1">
               Frequently Asked Questions &amp; ATS Guidelines
             </h2>
             <p className="text-xs text-slate-400 text-center mb-6">
