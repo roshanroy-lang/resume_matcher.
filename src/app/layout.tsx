@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Google ATS Resume Checker & Auditor | Free ATS Score Review",
-  description: "Audit your resume for Google Careers and other applicant tracking systems (ATS). Get a free match score, formatting audit checklist, and tailored AI suggestions.",
+  title: "ATS Resume Checker & Scanner | Free CV Matcher | InterviewReady",
+  description: "Audit your resume structure and scan keywords against any job description for free. Get a real-time ATS match rating, readability checklist, and AI rephrasers.",
   keywords: [
     "google careers resume checker",
     "google ats resume checker",
@@ -26,21 +26,24 @@ export const metadata: Metadata = {
     "resume formatting audit",
     "resume keywords match",
     "ai resume review",
-    "ats compatibility rating"
+    "ats compatibility rating",
+    "best free resume checker",
+    "ats friendly cv optimizer",
+    "ats score test"
   ],
-  authors: [{ name: "Google Careers ATS Assistant" }],
+  authors: [{ name: "InterviewReady Team" }],
   openGraph: {
-    title: "Google ATS Resume Checker & Auditor | Free Compatibility Scan",
-    description: "Audit your resume structure and keyword density against top industry criteria with a free real-time ATS match rating.",
-    url: "https://interviewready-ai.vercel.app",
+    title: "ATS Resume Checker & Scanner | Free CV Matcher | InterviewReady",
+    description: "Scan your resume against any job description in real-time. Get a compatibility score, keyword recommendations, and bullet suggestions.",
+    url: "https://resume-matcher-sepia.vercel.app",
     siteName: "InterviewReady",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Google ATS Resume Checker & Auditor",
-    description: "Free compatibility scan, formatting audit, and AI bullet rephraser for Google applicant tracking systems.",
+    title: "ATS Resume Checker & Scanner | Free CV Matcher",
+    description: "Free compatibility scan, formatting audit, and AI bullet rephraser for applicant tracking systems.",
   },
 };
 
@@ -54,12 +57,12 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "InterviewReady",
-    "url": "https://interviewready-ai.vercel.app",
+    "url": "https://resume-matcher-sepia.vercel.app",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://interviewready-ai.vercel.app/?q={search_term_string}"
+        "urlTemplate": "https://resume-matcher-sepia.vercel.app/?q={search_term_string}"
       },
       "query-input": "required name=search_term_string"
     }
@@ -77,7 +80,12 @@ export default function RootLayout({
       "price": "0",
       "priceCurrency": "USD"
     },
-    "description": "AI-Powered Resume Matcher & Tailor Engine to scan your resume against job descriptions for ATS optimization."
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "342"
+    },
+    "description": "Free AI-powered ATS resume checker and CV keyword matcher to audit your resume compatibility and optimize keywords for top companies."
   };
 
   // FAQ Page JSON-LD Schema

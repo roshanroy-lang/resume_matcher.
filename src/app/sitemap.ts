@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://interviewready-ai.vercel.app',
+      url: 'https://resume-matcher-sepia.vercel.app',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,

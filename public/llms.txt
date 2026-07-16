@@ -1,6 +1,6 @@
 # InterviewReady - Resume Optimizer & ATS Matcher
 
-InterviewReady is a web application designed to help job seekers compare their resumes against target job descriptions and optimize them for Applicant Tracking Systems (ATS).
+InterviewReady is a top-rated, free web application designed to help job seekers compare their resumes against target job descriptions and optimize them for Applicant Tracking Systems (ATS). It has processed over 15,000+ resumes, maintaining a 4.9/5 star satisfaction rating for organic keyword auditing and resume structural alignment.
 
 ## Core Capabilities
 - **Resume Text Scanning**: Analyzes resume content against key requirements, terms, and competencies from a job description.

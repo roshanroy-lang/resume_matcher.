@@ -1013,7 +1013,7 @@ export default function Home() {
                     </div>
                     <button
                       onClick={() => {
-                        const bragText = `🎯 I just audited my resume using InterviewReady and got a ${animatedScore}% Match & ${animatedFormattingScore}% ATS formatting score! Check your compatibility for free: https://interviewready-ai.vercel.app/ #InterviewReady #ATSChecker`;
+                        const bragText = `🎯 I just audited my resume using InterviewReady and got a ${animatedScore}% Match & ${animatedFormattingScore}% ATS formatting score! Check your compatibility for free: https://resume-matcher-sepia.vercel.app/ #InterviewReady #ATSChecker`;
                         navigator.clipboard.writeText(bragText);
                         alert("Brag post copied successfully! Paste on LinkedIn or X/Twitter.");
                       }}
