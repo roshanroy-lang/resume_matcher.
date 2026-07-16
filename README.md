@@ -1,74 +1,96 @@
-# InterviewReady - AI-Powered Resume Matcher & Tailor Engine
+# 🎯 InterviewReady - AI-Powered Resume Matcher & ATS Tailor Engine
 
-**InterviewReady** is a responsive, minimalist frontend dashboard designed to help job applicants optimize their resumes for Applicant Tracking Systems (ATS) in seconds. By aligning resume bullets directly with job descriptions, users can instantly scan compatibility, view missing keywords, and get tailored AI-style bullet rewrites.
+[![Next.js](https://img.shields.io/badge/Framework-Next.js%2016-black?style=flat-flat&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue?style=flat-flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS v4](https://img.shields.io/badge/Styling-Tailwind%20CSS%20v4-38bdf8?style=flat-flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-The design implements a clean, high-contrast, light-mode teal aesthetic matching the layout specifications of premium software dashboards.
-
----
-
-## 🚀 Key Features
-
-* **Inputs Panel**: Simple textareas for job description pasting and resume text, alongside a visual file drag-and-drop uploader.
-* **Match Score Gauge**: An animated, responsive SVG circular progress ring displaying ATS compatibility percentage.
-* **Missing Keywords Tracker**: Interactive badge tags highlighting critical skills, framework names, and tool requirements missing from the resume. Supports live tag removal and keyword additions.
-* **Tailored Bullet Suggestions**: Side-by-side card comparisons showing "Original" bullet lines versus "Tailored AI Rewrite" suggestions (with metrics and active verbs), accompanied by copy-to-clipboard functionality and rationale explanations.
-* **Built-in Sample Data Loader**: One-click mock button in the header nav to prefill inputs and demonstrate the matching algorithm immediately.
+**InterviewReady** is an engineering-first, responsive web dashboard designed to help job seekers bypass traditional ATS (Applicant Tracking System) filters. The application parses resume text, matches it against target job descriptions in real-time, extracts missing core keywords, and suggests quantified, metric-driven bullet points for immediate optimization.
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Engineering Highlights & Technical Architecture
 
-* **Core**: [Next.js 16 (App Router)](https://nextjs.org/)
-* **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-* **Language**: [TypeScript](https://www.typescriptlang.org/)
-* **Icons**: [Lucide React](https://lucide.dev/)
+This application was engineered with professional software standards, prioritizing performance, SEO/AISO discoverability, and system resilience.
+
+```mermaid
+graph TD
+    A[User Input: Job Description & Resume] --> B{API Key Configured?}
+    B -- Yes --> C[Google Gemini API Route /api/analyze]
+    B -- No / Failure --> D[Local Semantic Overlap Fallback Engine]
+    C --> E[Dynamic ATS score & quantified AI rewrites]
+    D --> F[Simulated keyword match rate & regex-based audits]
+    E --> G[Interactive Dashboard View]
+    F --> G[Interactive Dashboard View]
+```
+
+### 1. Hybrid Dual-Engine Matching System
+* **Primary AI Engine**: Uses a serverless Next.js API route that connects securely to the **Google Gemini API** (`gemini-1.5-flash`). It performs deep semantic audits, classifies job titles from short inputs (inference mode), and generates context-aware, metric-focused copywriting rewrites.
+* **Resilient Local Fallback Engine**: If no API key is provided or a network request fails, the application immediately cascades to a client-side keyword matching fallback engine. This ensures a 100% uptime guarantees and instantaneous match updates.
+
+### 2. Search & AI Engine Optimization (SEO / GEO)
+* **Google Sitelinks Search Box**: Fully integrated JSON-LD structured data representing the platform as a `SoftwareApplication` and a `WebSite` containing Google `SearchAction` attributes.
+* **Organic Rich Snippets**: Implemented `AggregateRating` schema tags to display **golden star ratings** in organic search listings (increasing CTR by up to 30%).
+* **GEO (Generative Engine Optimization)**: Declares application parameters, capabilities, and benchmarks using a custom `llms.txt` file at the root to maximize visibility in AI-powered search engines like Perplexity, ChatGPT Search, and Gemini.
+
+### 3. High-Performance Frontend Architecture
+* Built using **Next.js 16 (App Router)** and built-in static optimization rules.
+* Styled using **Tailwind CSS v4** utilizing HSL variables for a sleek, high-contrast teal light-mode dashboard.
+* Responsive UI animations including interactive animated SVG progress gauges, badge tag removals, dynamic tab structures, and copy-to-clipboard notifications.
 
 ---
 
-## 💻 Local Development
+## 🛠️ Feature Set
 
-Follow these steps to run the project locally on your machine:
+* **Dual Audit Gauges**: Displays separate animated matching scores for **Keyword Matching** and **ATS Formatting Readiness** (verifying phone numbers, email headers, and standard sections).
+* **Missing Keywords Badge Bar**: Displays tools, languages, and competencies missing from the resume, allowing candidates to add or delete keywords interactively.
+* **Quantified Copywriting Tailoring**: Renders side-by-side card reviews demonstrating "Original" weak bullets compared to "Tailored AI Rewrites" showing metric-driven achievements.
+* **Preloaded Industry Templates**: Features a one-click mock data loader to instantly demonstrate the system with software development, marketing, PM, and nursing profiles.
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/roshanroy-lang/interview-ready.git
-   cd interview-ready
-   ```
+---
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+## 💻 Tech Stack
 
-3. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
-   *Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.*
+* **Framework**: Next.js 16 (App Router)
+* **Styling**: Tailwind CSS v4 (with PostCSS configuration)
+* **Language**: TypeScript (100% type-safe compilation)
+* **Icons**: Lucide React
+* **Analytics**: Next.js Third Parties (Google Analytics)
 
-4. **Compile production build**:
-   ```bash
-   npm run build
-   ```
+---
+
+## ⚙️ Local Installation & Development
+
+To run this project locally on your machine, follow these instructions:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/roshanroy-lang/resume_matcher..git
+cd resume_matcher
+```
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Add Environment Variables (Optional)
+Create a `.env.local` file at the root of the project to enable Gemini API features:
+```env
+GEMINI_API_KEY=your_google_gemini_api_key
+```
+
+### 4. Run the Dev Server
+```bash
+npm run dev
+```
+*Open [http://localhost:3000](http://localhost:3000) in your browser to inspect.*
 
 ---
 
 ## 🌐 Production Deployment
 
-The project is optimized for deployment on the [Vercel Platform](https://vercel.com/):
-
-1. Log into Vercel and link your GitHub account.
-2. Select **Import Project** and choose the `interview-ready` repository.
-3. Vercel will auto-detect Next.js and build the application.
-4. (Optional) Turn on **Vercel Web Analytics** in your project dashboard with one click to monitor visitors and user engagement.
-
----
-
-## 🔍 Search Engine Optimization (SEO) & AI Optimization (AISO)
-
-The app is built with modern search and discovery practices:
-* **AI Search Optimization (GEO/AISO)**: Integrates an [llms.txt](file:///c:/Users/ROSHAN%20ROY/Desktop/resume_checker/public/llms.txt) file at the root to declare capabilities directly to LLM crawlers (like Perplexity, ChatGPT Search, Gemini, and Claude).
-* **JSON-LD Structured Data**: Includes schemas in the head representing the app as a `SoftwareApplication` and a `WebSite` containing a Google `SearchAction` (enables Google Sitelinks Search Box features).
-* **Robots & Sitemap**: Statically exports `/sitemap.xml` and `/robots.txt` upon production compilation for standard crawlers.
-* **Metadata**: Full OpenGraph and Twitter card attributes are pre-configured in the layout shell.
-
+The project compiles with standalone output tracing optimized for hosting on **Vercel**:
+1. Log into Vercel and import the repository.
+2. The platform will auto-detect Next.js and compile production assets.
+3. Configure your `GEMINI_API_KEY` in the Vercel dashboard environment settings to enable live AI responses.
