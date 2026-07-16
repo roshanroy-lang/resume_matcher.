@@ -868,7 +868,7 @@ export default function Home() {
               <button
                 onClick={startAnalysis}
                 disabled={isAnalyzing}
-                className="w-full mt-2 group py-3 px-6 rounded-lg font-semibold bg-[#1A1A1A] hover:bg-[#2A2A2A] text-white shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed"
+                className="w-full mt-2 group py-3 px-6 rounded-lg font-semibold bg-[#008080] hover:bg-[#006666] text-white shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed"
               >
                 {isAnalyzing ? (
                   <>
