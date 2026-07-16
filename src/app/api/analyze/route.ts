@@ -50,6 +50,10 @@ Provide the analysis output in JSON format with the following keys:
   - "tailored": The optimized tailored bullet point rewrite.
   - "reason": A brief explanation of why this change is effective and what keywords it injects.
   If the content is not a resume, this must be an empty array.
+- "isSingleColumn": A boolean indicating if the resume appears to be formatted in a single-column layout (true) rather than multi-column (false). If the layout has sidebars, multiple columns, or floating text boxes, set this to false.
+- "hasStandardHeaders": A boolean indicating if the resume uses standard headings like "Work Experience", "Education", and "Skills" (true) rather than creative titles like "My Story" or "What I Do" (false).
+- "hasConsistentDates": A boolean indicating if all employment and education dates are written in a consistent, parser-friendly date format (e.g., MM/YYYY or Month YYYY) (true) or if they are missing/inconsistent (false).
+- "noGraphicsOrCharts": A boolean indicating if the resume is free of progress bars, percentage circles, skill charts, star ratings, or graphics (true) or if they are present (false).
 - "isInferred": A boolean value. Set this to true ONLY if the provided JOB DESCRIPTION is very short (e.g. less than 12 words or is just a job title/name like "Frontend Engineer", "Project Coordinator", "Registered Nurse", etc.). Set this to false if a detailed job description was provided.
 - "inferredTitle": A string representing the inferred job title (e.g., "Frontend Engineer") if "isInferred" is true. If "isInferred" is false, set this to null.
 

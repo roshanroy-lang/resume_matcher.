@@ -294,6 +294,10 @@ export default function Home() {
   const [hasLinkedIn, setHasLinkedIn] = useState(false);
   const [sectionsFound, setSectionsFound] = useState<string[]>([]);
   const [formattingIssues, setFormattingIssues] = useState<{issue: string, severity: 'error' | 'warning', fix: string}[]>([]);
+  const [isSingleColumn, setIsSingleColumn] = useState(true);
+  const [hasStandardHeaders, setHasStandardHeaders] = useState(true);
+  const [hasConsistentDates, setHasConsistentDates] = useState(true);
+  const [noGraphicsOrCharts, setNoGraphicsOrCharts] = useState(true);
 
   // FAQ accordion state
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
@@ -320,6 +324,10 @@ export default function Home() {
     setHasLinkedIn(false);
     setSectionsFound([]);
     setFormattingIssues([]);
+    setIsSingleColumn(true);
+    setHasStandardHeaders(true);
+    setHasConsistentDates(true);
+    setNoGraphicsOrCharts(true);
   };
 
 
@@ -469,6 +477,10 @@ export default function Home() {
           setBullets(data.bullets);
           setIsInferred(!!data.isInferred);
           setInferredTitle(data.inferredTitle || null);
+          setIsSingleColumn(data.isSingleColumn !== false);
+          setHasStandardHeaders(data.hasStandardHeaders !== false);
+          setHasConsistentDates(data.hasConsistentDates !== false);
+          setNoGraphicsOrCharts(data.noGraphicsOrCharts !== false);
           
           setIsAnalyzing(false);
           setAnalysisCompleted(true);
@@ -502,8 +514,23 @@ export default function Home() {
         const issuesLocal: {issue: string, severity: 'error' | 'warning', fix: string}[] = [];
         let fmtScoreLocal = 100;
 
+        let isSingleColumnLocal = true;
+        let hasStandardHeadersLocal = sectionsLocal.includes("experience") && sectionsLocal.includes("education") && sectionsLocal.includes("skills");
+        
+        // Simple date format consistency check
+        const dateRegex = /\b(\d{1,2}\/\d{2,4}|(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{4}|present|current)\b/i;
+        let hasConsistentDatesLocal = dateRegex.test(resumeContent);
+        
+        // Check for common graphic-related text (like progress bar Unicode, % in skills, level indicators)
+        const hasGraphicsLocal = /(%|[\u2580-\u259F]{3,}|progress|stars|level)/i.test(resumeContent) && /skills/i.test(resumeContent);
+        let noGraphicsOrChartsLocal = !hasGraphicsLocal;
+
         if (isNotResumeLocal) {
           fmtScoreLocal = 0;
+          isSingleColumnLocal = false;
+          hasStandardHeadersLocal = false;
+          hasConsistentDatesLocal = false;
+          noGraphicsOrChartsLocal = false;
           issuesLocal.push({
             issue: "Invalid Resume Document",
             severity: "error",
@@ -691,6 +718,10 @@ export default function Home() {
         setFormattingIssues(issuesLocal);
         setMissingKeywords(missing);
         setBullets(generatedBullets);
+        setIsSingleColumn(isSingleColumnLocal);
+        setHasStandardHeaders(hasStandardHeadersLocal);
+        setHasConsistentDates(hasConsistentDatesLocal);
+        setNoGraphicsOrCharts(noGraphicsOrChartsLocal);
       } catch (err) {
         console.error('Local fallback engine error:', err);
         setScore(45);
@@ -704,6 +735,10 @@ export default function Home() {
             reason: 'Strengthens phrasing to show results.'
           }
         ]);
+        setIsSingleColumn(true);
+        setHasStandardHeaders(false);
+        setHasConsistentDates(false);
+        setNoGraphicsOrCharts(true);
       }
 
       setIsAnalyzing(false);
@@ -1190,7 +1225,7 @@ export default function Home() {
                     <div className="flex flex-col gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200">
                       
                       {/* Checklist items */}
-                      <div className="grid grid-cols-2 gap-2 pb-3.5 border-b border-slate-200/60">
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 pb-3.5 border-b border-slate-200/60">
                         <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
                           {hasEmail ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
                           <span>Email address</span>
@@ -1205,7 +1240,23 @@ export default function Home() {
                         </div>
                         <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
                           {sectionsFound.includes('experience') ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
-                          <span>Experience section</span>
+                          <span>Experience Section</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {isSingleColumn ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
+                          <span>Single-Column Layout</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {hasStandardHeaders ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
+                          <span>Standard Headers</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {hasConsistentDates ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />}
+                          <span>Consistent Dates Format</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {noGraphicsOrCharts ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />}
+                          <span>No Graphics/Bar Charts</span>
                         </div>
                       </div>
 
