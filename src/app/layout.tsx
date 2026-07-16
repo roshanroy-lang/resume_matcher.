@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Playfair_Display, Instrument_Sans } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
   display: "swap",
 });
@@ -133,9 +139,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} h-full antialiased`}
+      className={`${playfair.variable} ${instrumentSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0B0C10] text-[#E4E6EB] font-sans selection:bg-teal-500/20 selection:text-teal-400">
+      <body className="min-h-full flex flex-col bg-[#FAF7F2] text-[#1A1A1A] font-sans selection:bg-[#1A1A1A]/10 selection:text-[#1A1A1A]">
         
         {/* Google AdSense integration */}
         {adsenseClientId && (

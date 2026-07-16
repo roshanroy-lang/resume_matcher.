@@ -690,7 +690,7 @@ export default function Home() {
   return (
     <>
       {/* Top Navigation */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#0E1017]/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full border-b border-[#1A1A1A]/10 bg-[#FAF7F2]/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
           
           <div className="flex items-center gap-3">
@@ -701,19 +701,19 @@ export default function Home() {
               height={36}
               className="rounded-lg shadow-sm"
             />
-            <span className="text-lg font-bold text-white tracking-tight">
+            <span className="text-xl font-serif font-black text-[#1A1A1A] tracking-tight">
               InterviewReady
             </span>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="hidden lg:flex items-center gap-1.5 rounded-full bg-teal-950/40 border border-teal-500/20 px-3 py-1 text-xs font-medium text-teal-400">
-              <Sparkles className="h-3.5 w-3.5" />
+            <div className="hidden lg:flex items-center gap-1.5 rounded-full bg-teal-50 border border-teal-200/60 px-3 py-1 text-xs font-semibold text-teal-800">
+              <Sparkles className="h-3.5 w-3.5 text-[#008080]" />
               <span>Universal Career Matcher</span>
             </div>
 
-            <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400 pl-4 border-l border-white/10">
-              <a href="#" className="text-white font-semibold transition-colors">Dashboard</a>
+            <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500 pl-4 border-l border-[#1A1A1A]/10">
+              <a href="#" className="text-[#1A1A1A] font-semibold transition-colors">Dashboard</a>
             </nav>
           </div>
         </div>
@@ -723,21 +723,21 @@ export default function Home() {
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 flex-grow flex flex-col gap-10 relative z-10">
         
         {/* Title area */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/5 pb-8">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-[#1A1A1A]/10 pb-8">
           <div className="max-w-3xl">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black text-[#1A1A1A] tracking-tight leading-tight">
               Optimize your resume <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-emerald-400">for any industry or profession.</span>
+              <span className="text-[#008080] italic">for any industry or profession.</span>
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-slate-400 max-w-2xl font-normal leading-relaxed">
+            <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl font-normal leading-relaxed">
               InterviewReady compares your profile content against key requirements in any field in real-time, delivering compatibility metrics and tailored copywriting improvements.
             </p>
           </div>
           
           {/* Quick industry selector widget */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-[#151821] p-3 rounded-xl border border-white/5 shadow-sm self-start lg:self-auto">
-            <div className="flex items-center gap-1 text-xs font-bold text-slate-500 uppercase tracking-wider">
-              <Briefcase className="h-3.5 w-3.5 text-teal-400" />
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-[#FAF7F2] p-3 rounded-xl border border-[#1A1A1A]/10 shadow-sm self-start lg:self-auto">
+            <div className="flex items-center gap-1 text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <Briefcase className="h-3.5 w-3.5 text-[#008080]" />
               <span>Try an Industry:</span>
             </div>
             <select
@@ -747,7 +747,7 @@ export default function Home() {
                 setIndustryKey(key);
                 handleLoadMockData(key);
               }}
-              className="bg-[#0E1017] border border-white/5 text-xs font-semibold text-slate-200 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer"
+              className="bg-white border border-[#1A1A1A]/10 text-xs font-semibold text-[#1A1A1A] rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-[#008080] cursor-pointer"
             >
               <option value="tech">Technology / Software Dev</option>
               <option value="marketing">Marketing / Growth Sales</option>
@@ -757,7 +757,7 @@ export default function Home() {
             
             <button
               onClick={() => handleLoadMockData(industryKey)}
-              className="flex items-center gap-1.5 rounded-lg border border-white/5 bg-[#1C1F2E] hover:bg-[#252A3D] px-3 py-2 text-xs text-slate-200 font-bold transition-all cursor-pointer"
+              className="flex items-center gap-1.5 rounded-lg border border-[#1A1A1A]/10 bg-white hover:bg-slate-50 px-3 py-2 text-xs text-[#1A1A1A] font-bold transition-all cursor-pointer"
               title="Reset sample data for selected industry"
             >
               <RefreshCw className="h-3 w-3" />
@@ -771,10 +771,10 @@ export default function Home() {
           
           {/* Left Panel: Inputs */}
           <div className="lg:col-span-6 flex flex-col gap-6">
-            <div className="glass-panel rounded-xl p-6 shadow-sm bg-card-bg flex flex-col gap-5">
-              <div className="flex items-center gap-2 pb-3 border-b border-white/5">
-                <Briefcase className="h-5 w-5 text-teal-400" />
-                <h2 className="text-base font-bold text-white uppercase tracking-wider text-xs">Inputs</h2>
+            <div className="glass-panel rounded-xl p-6 bg-card-bg flex flex-col gap-5 border border-[#1A1A1A]/10">
+              <div className="flex items-center gap-2 pb-3 border-b border-[#1A1A1A]/10">
+                <Briefcase className="h-5 w-5 text-[#008080]" />
+                <h2 className="text-base font-bold text-[#1A1A1A] uppercase tracking-wider text-xs">Inputs</h2>
               </div>
 
               {/* Job Description Textarea */}
@@ -786,7 +786,7 @@ export default function Home() {
                   value={jobDescription}
                   onChange={(e) => setJobDescription(e.target.value)}
                   placeholder="Paste the job description or role requirements here..."
-                  className="w-full h-48 rounded-lg border border-white/5 bg-[#0E1017] p-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all resize-none"
+                  className="w-full h-48 rounded-lg border border-[#1A1A1A]/10 bg-white p-4 text-sm text-[#1A1A1A] placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#008080] focus:border-[#008080] transition-all resize-none"
                 />
               </div>
 
@@ -798,13 +798,13 @@ export default function Home() {
                   </label>
                   
                   {/* Tabs */}
-                  <div className="flex rounded-lg bg-[#0E1017] p-0.5 border border-white/5">
+                  <div className="flex rounded-lg bg-slate-100 p-0.5 border border-[#1A1A1A]/10">
                     <button
                       onClick={() => setActiveTab('paste')}
                       className={`px-3 py-1 text-xs rounded-md font-medium transition-all ${
                         activeTab === 'paste' 
-                          ? 'bg-[#1C1F2E] text-white shadow-sm border border-white/5' 
-                          : 'text-slate-400 hover:text-white'
+                          ? 'bg-white text-[#1A1A1A] shadow-sm border border-[#1A1A1A]/10' 
+                          : 'text-slate-500 hover:text-[#1A1A1A]'
                       }`}
                     >
                       Paste Text
@@ -813,8 +813,8 @@ export default function Home() {
                       onClick={() => setActiveTab('upload')}
                       className={`px-3 py-1 text-xs rounded-md font-medium transition-all ${
                         activeTab === 'upload' 
-                          ? 'bg-[#1C1F2E] text-white shadow-sm border border-white/5' 
-                          : 'text-slate-400 hover:text-white'
+                          ? 'bg-white text-[#1A1A1A] shadow-sm border border-[#1A1A1A]/10' 
+                          : 'text-slate-500 hover:text-[#1A1A1A]'
                       }`}
                     >
                       Upload File
@@ -828,10 +828,10 @@ export default function Home() {
                     value={resumeContent}
                     onChange={(e) => setResumeContent(e.target.value)}
                     placeholder="Paste the current text of your CV / Resume..."
-                    className="w-full h-48 rounded-lg border border-white/5 bg-[#0E1017] p-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all resize-none"
+                    className="w-full h-48 rounded-lg border border-[#1A1A1A]/10 bg-white p-4 text-sm text-[#1A1A1A] placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#008080] focus:border-[#008080] transition-all resize-none"
                   />
                 ) : (
-                  <div className="relative group flex flex-col items-center justify-center w-full h-48 border border-dashed border-white/10 rounded-lg bg-[#0E1017]/30 hover:bg-[#0E1017]/60 transition-all p-6 text-center cursor-pointer">
+                  <div className="relative group flex flex-col items-center justify-center w-full h-48 border border-dashed border-[#1A1A1A]/20 rounded-lg bg-white hover:bg-slate-50/50 transition-all p-6 text-center cursor-pointer">
                     <input 
                       type="file" 
                       accept=".pdf,.docx,.txt"
@@ -841,22 +841,22 @@ export default function Home() {
                     
                     {fileName ? (
                       <div className="flex flex-col items-center gap-3">
-                        <div className="p-3 bg-teal-950/30 text-teal-400 rounded-lg border border-teal-500/20">
+                        <div className="p-3 bg-teal-50 text-[#008080] rounded-lg border border-teal-100">
                           <FileCheck2 className="h-6 w-6" />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-slate-200 truncate max-w-xs">{fileName}</p>
-                          <p className="text-xs text-slate-400 mt-1">Successfully attached. Click to replace.</p>
+                          <p className="text-sm font-semibold text-[#1A1A1A] truncate max-w-xs">{fileName}</p>
+                          <p className="text-xs text-slate-500 mt-1">Successfully attached. Click to replace.</p>
                         </div>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center gap-3">
-                        <div className="p-3 bg-[#0E1017] text-slate-400 rounded-lg group-hover:text-teal-400 group-hover:bg-teal-950/30 transition-colors border border-white/5">
+                        <div className="p-3 bg-slate-50 text-slate-400 rounded-lg group-hover:text-[#008080] group-hover:bg-teal-50 transition-colors border border-[#1A1A1A]/10">
                           <UploadCloud className="h-6 w-6" />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-slate-300">Drag &amp; drop your resume, or browse</p>
-                          <p className="text-xs text-slate-500 mt-1">Supports PDF, DOCX, or TXT (Max 5MB)</p>
+                          <p className="text-sm font-semibold text-slate-700">Drag &amp; drop your resume, or browse</p>
+                          <p className="text-xs text-slate-400 mt-1">Supports PDF, DOCX, or TXT (Max 5MB)</p>
                         </div>
                       </div>
                     )}
@@ -868,7 +868,7 @@ export default function Home() {
               <button
                 onClick={startAnalysis}
                 disabled={isAnalyzing}
-                className="w-full mt-2 group py-3 px-6 rounded-lg font-semibold bg-teal-600 hover:bg-teal-700 text-white shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed"
+                className="w-full mt-2 group py-3 px-6 rounded-lg font-semibold bg-[#1A1A1A] hover:bg-[#2A2A2A] text-white shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed"
               >
                 {isAnalyzing ? (
                   <>
@@ -887,34 +887,34 @@ export default function Home() {
 
           {/* Right Panel: Analysis View */}
           <div className="lg:col-span-6 flex flex-col gap-6">
-            <div className="glass-panel rounded-xl p-6 shadow-sm bg-card-bg flex flex-col gap-6 min-h-[516px] relative">
-              <div className="flex items-center gap-2 pb-3 border-b border-white/5">
-                <Code className="h-5 w-5 text-teal-400" />
-                <h2 className="text-base font-bold text-white uppercase tracking-wider text-xs">Analysis View</h2>
+            <div className="glass-panel rounded-xl p-6 bg-card-bg flex flex-col gap-6 min-h-[516px] relative border border-[#1A1A1A]/10">
+              <div className="flex items-center gap-2 pb-3 border-b border-[#1A1A1A]/10">
+                <Code className="h-5 w-5 text-[#008080]" />
+                <h2 className="text-base font-bold text-[#1A1A1A] uppercase tracking-wider text-xs">Analysis View</h2>
               </div>
 
               {!isAnalyzing && !analysisCompleted ? (
                 // Empty state view
                 <div className="flex-grow flex flex-col items-center justify-center p-8 text-center my-auto">
-                  <div className="h-14 w-14 bg-[#0E1017] rounded-xl border border-white/5 flex items-center justify-center text-slate-500 mb-4">
+                  <div className="h-14 w-14 bg-slate-50 rounded-xl border border-[#1A1A1A]/10 flex items-center justify-center text-slate-400 mb-4">
                     <FileText className="h-6 w-6" />
                   </div>
-                  <h3 className="text-sm font-bold text-white">Awaiting matching instructions</h3>
-                  <p className="text-xs sm:text-sm text-slate-400 max-w-sm mt-2 leading-relaxed">
-                    Provide the job description and your resume on the left, then click <strong className="text-teal-400">&quot;Analyze &amp; Match&quot;</strong> to generate your real-time score and keywords optimization suggestions.
+                  <h3 className="text-sm font-bold text-[#1A1A1A]">Awaiting matching instructions</h3>
+                  <p className="text-xs sm:text-sm text-slate-500 max-w-sm mt-2 leading-relaxed">
+                    Provide the job description and your resume on the left, then click <strong className="text-[#008080]">&quot;Analyze &amp; Match&quot;</strong> to generate your real-time score and keywords optimization suggestions.
                   </p>
                 </div>
               ) : isAnalyzing ? (
                 // Analyzing state view
                 <div className="flex-grow flex flex-col items-center justify-center p-8 text-center my-auto gap-4">
                   <div className="relative flex items-center justify-center h-16 w-16">
-                    <div className="absolute inset-0 rounded-full border-4 border-white/5"></div>
-                    <div className="absolute inset-0 rounded-full border-4 border-t-teal-400 border-r-teal-400 animate-spin"></div>
-                    <Sparkles className="h-5 w-5 text-teal-400 animate-pulse" />
+                    <div className="absolute inset-0 rounded-full border-4 border-slate-100"></div>
+                    <div className="absolute inset-0 rounded-full border-4 border-t-[#008080] border-r-[#008080] animate-spin"></div>
+                    <Sparkles className="h-5 w-5 text-[#008080] animate-pulse" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-white">Running semantic analysis...</h3>
-                    <p className="text-xs text-slate-400 mt-2 max-w-xs leading-relaxed">
+                    <h3 className="text-sm font-bold text-[#1A1A1A]">Running semantic analysis...</h3>
+                    <p className="text-xs text-slate-500 mt-2 max-w-xs leading-relaxed">
                       Comparing resume bullets with role requirements to verify ATS compatibility.
                     </p>
                   </div>
@@ -925,28 +925,28 @@ export default function Home() {
                   
                   {/* Job Title Inference Banner */}
                   {isInferred && inferredTitle && (
-                    <div className="flex items-start gap-3 rounded-lg border border-teal-500/20 bg-teal-950/20 p-3.5 text-xs text-slate-300">
-                      <Sparkles className="h-4 w-4 text-teal-400 shrink-0 mt-0.5 animate-pulse" />
+                    <div className="flex items-start gap-3 rounded-lg border border-teal-100 bg-teal-50/50 p-3.5 text-xs text-slate-700">
+                      <Sparkles className="h-4 w-4 text-[#008080] shrink-0 mt-0.5 animate-pulse" />
                       <div>
-                        <span className="font-bold text-white">Matcher Inference Mode:</span> We detected a brief input and dynamically generated industry requirements for <strong className="text-teal-400 font-bold">"{inferredTitle}"</strong> to compare your resume.
+                        <span className="font-bold text-slate-900">Matcher Inference Mode:</span> We detected a brief input and dynamically generated industry requirements for <strong className="text-[#008080] font-bold">"{inferredTitle}"</strong> to compare your resume.
                       </div>
                     </div>
                   )}
 
                   {/* Top Stats: Dual Score & Summary Card */}
-                  <div className="flex flex-col gap-4 bg-[#0E1017] rounded-xl p-5 border border-white/5">
+                  <div className="flex flex-col gap-4 bg-slate-50 rounded-xl p-5 border border-[#1A1A1A]/10">
                     <div className="grid grid-cols-2 gap-4 items-center justify-items-center">
                       
                       {/* Keyword Match Score */}
                       <div className="flex flex-col items-center gap-1.5">
                         <div className="relative flex items-center justify-center">
                           <svg className="w-20 h-20 transform -rotate-90">
-                            <circle cx="40" cy="40" r="34" className="stroke-white/5" strokeWidth="5" fill="transparent" />
+                            <circle cx="40" cy="40" r="34" className="stroke-slate-200" strokeWidth="5" fill="transparent" />
                             <circle
                               cx="40"
                               cy="40"
                               r="34"
-                              className="stroke-teal-400 transition-all duration-500 ease-out"
+                              className="stroke-[#008080] transition-all duration-500 ease-out"
                               strokeWidth="5"
                               fill="transparent"
                               strokeDasharray={2 * Math.PI * 34}
@@ -955,23 +955,23 @@ export default function Home() {
                             />
                           </svg>
                           <div className="absolute flex flex-col items-center justify-center text-center">
-                            <span className="text-sm font-black text-white">{animatedScore}%</span>
-                            <span className="text-[7px] text-slate-500 font-bold uppercase tracking-wider">Match</span>
+                            <span className="text-sm font-black text-slate-900">{animatedScore}%</span>
+                            <span className="text-[7px] text-slate-400 font-bold uppercase tracking-wider">Match</span>
                           </div>
                         </div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Keyword Match</span>
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider text-center">Keyword Match</span>
                       </div>
 
                       {/* Formatting Audit Score */}
                       <div className="flex flex-col items-center gap-1.5">
                         <div className="relative flex items-center justify-center">
                           <svg className="w-20 h-20 transform -rotate-90">
-                            <circle cx="40" cy="40" r="34" className="stroke-white/5" strokeWidth="5" fill="transparent" />
+                            <circle cx="40" cy="40" r="34" className="stroke-slate-200" strokeWidth="5" fill="transparent" />
                             <circle
                               cx="40"
                               cy="40"
                               r="34"
-                              className="stroke-emerald-400 transition-all duration-500 ease-out"
+                              className="stroke-[#006666] transition-all duration-500 ease-out"
                               strokeWidth="5"
                               fill="transparent"
                               strokeDasharray={2 * Math.PI * 34}
@@ -980,21 +980,21 @@ export default function Home() {
                             />
                           </svg>
                           <div className="absolute flex flex-col items-center justify-center text-center">
-                            <span className="text-sm font-black text-white">{animatedFormattingScore}%</span>
-                            <span className="text-[7px] text-slate-500 font-bold uppercase tracking-wider">Format</span>
+                            <span className="text-sm font-black text-slate-900">{animatedFormattingScore}%</span>
+                            <span className="text-[7px] text-slate-400 font-bold uppercase tracking-wider">Format</span>
                           </div>
                         </div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">ATS Format</span>
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider text-center">ATS Format</span>
                       </div>
                     </div>
 
                     {/* Quick feedback message */}
-                    <div className="flex flex-col gap-1 pt-3 border-t border-white/5 text-center sm:text-left">
-                      <div className="flex items-center justify-center sm:justify-start gap-1.5 text-teal-400 text-xs font-bold uppercase tracking-wider">
+                    <div className="flex flex-col gap-1 pt-3 border-t border-slate-200/60 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-1.5 text-[#008080] text-xs font-bold uppercase tracking-wider">
                         <CheckCircle2 className="h-3.5 w-3.5" />
                         <span>ATS Audit Completed</span>
                       </div>
-                      <p className="text-xs text-slate-400 leading-normal font-normal">
+                      <p className="text-xs text-slate-600 leading-normal font-normal">
                         {animatedScore >= 80 && animatedFormattingScore >= 80 
                           ? "Excellent! Your resume has very high keyword match alignment and meets standard ATS formatting rules."
                           : "Improve your scoring by addressing the formatting checklist and missing keywords below."}
@@ -1003,12 +1003,12 @@ export default function Home() {
                   </div>
 
                   {/* Brag & Share Card */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-xl border border-teal-500/20 bg-teal-950/20">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-xl border border-teal-100 bg-teal-50/30">
                     <div className="flex items-center gap-2">
-                      <Sparkles className="h-4 w-4 text-teal-400 shrink-0" />
+                      <Sparkles className="h-4 w-4 text-[#008080] shrink-0" />
                       <div className="flex flex-col text-left">
-                        <span className="text-xs font-bold text-white">Share Scorecard</span>
-                        <span className="text-[10px] text-slate-400">Copy referral post for LinkedIn or X/Twitter.</span>
+                        <span className="text-xs font-bold text-slate-800">Share Scorecard</span>
+                        <span className="text-[10px] text-slate-500">Copy referral post for LinkedIn or X/Twitter.</span>
                       </div>
                     </div>
                     <button
@@ -1017,7 +1017,7 @@ export default function Home() {
                         navigator.clipboard.writeText(bragText);
                         alert("Brag post copied successfully! Paste on LinkedIn or X/Twitter.");
                       }}
-                      className="w-full sm:w-auto px-3.5 py-1.5 rounded bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold transition-all cursor-pointer shadow-sm text-center"
+                      className="w-full sm:w-auto px-3.5 py-1.5 rounded bg-[#008080] hover:bg-[#006666] text-white text-xs font-bold transition-all cursor-pointer shadow-sm text-center"
                     >
                       Brag on Socials
                     </button>
@@ -1026,15 +1026,15 @@ export default function Home() {
                   {/* Missing Keywords Box */}
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                        <AlertCircle className="h-3.5 w-3.5 text-teal-400" />
+                      <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <AlertCircle className="h-3.5 w-3.5 text-[#008080]" />
                         Missing Keywords ({missingKeywords.length})
                       </h3>
                       
                       {!showAddKeyword && (
                         <button
                           onClick={() => setShowAddKeyword(true)}
-                          className="text-[10px] text-teal-400 hover:text-teal-300 font-semibold flex items-center gap-1 cursor-pointer"
+                          className="text-[10px] text-[#008080] hover:text-[#006666] font-semibold flex items-center gap-1 cursor-pointer"
                         >
                           <Plus className="h-3 w-3" /> Add keyword
                         </button>
@@ -1049,36 +1049,36 @@ export default function Home() {
                           value={newKeyword}
                           onChange={(e) => setNewKeyword(e.target.value)}
                           placeholder="e.g. Communication"
-                          className="flex-grow rounded-lg border border-white/5 bg-[#0E1017] p-2 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                          className="flex-grow rounded-lg border border-slate-200 bg-white p-2 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#008080] focus:border-[#008080]"
                           autoFocus
                         />
                         <button 
                           type="submit"
-                          className="bg-teal-600 hover:bg-teal-700 text-white rounded-lg px-3 py-1.5 text-xs font-medium cursor-pointer"
+                          className="bg-[#008080] hover:bg-[#006666] text-white rounded-lg px-3 py-1.5 text-xs font-medium cursor-pointer"
                         >
                           Add
                         </button>
                         <button 
                           type="button"
                           onClick={() => { setShowAddKeyword(false); setNewKeyword(''); }}
-                          className="bg-[#1C1F2E] hover:bg-[#252A3D] text-slate-300 rounded-lg px-2.5 py-1.5 text-xs cursor-pointer border border-white/5"
+                          className="bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg px-2.5 py-1.5 text-xs cursor-pointer border border-[#1A1A1A]/10"
                         >
                           Cancel
                         </button>
                       </form>
                     )}
 
-                    <div className="flex flex-wrap gap-2 p-4 rounded-lg bg-[#0E1017] border border-white/5 max-h-36 overflow-y-auto">
+                    <div className="flex flex-wrap gap-2 p-4 rounded-lg bg-slate-50 border border-slate-200 max-h-36 overflow-y-auto">
                       {missingKeywords.length > 0 ? (
                         missingKeywords.map((kw, idx) => (
                           <div 
                             key={idx} 
-                            className="group flex items-center gap-1.5 rounded-full border border-teal-500/20 bg-teal-950/20 hover:bg-teal-950/40 px-3 py-0.5 text-xs text-teal-300 transition-all font-medium"
+                            className="group flex items-center gap-1.5 rounded-full border border-teal-100 bg-teal-50 hover:bg-teal-100/70 px-3 py-0.5 text-xs text-teal-800 transition-all font-medium"
                           >
                             <span>{kw.text}</span>
                             <button
                               onClick={() => removeKeyword(idx)}
-                              className="text-teal-400 hover:text-rose-400 transition-colors opacity-70 group-hover:opacity-100 cursor-pointer"
+                              className="text-teal-600 hover:text-rose-600 transition-colors opacity-70 group-hover:opacity-100 cursor-pointer"
                               title="Delete tag"
                             >
                               &times;
@@ -1087,11 +1087,11 @@ export default function Home() {
                         ))
                       ) : (
                         score === 0 ? (
-                          <p className="text-xs text-slate-500 italic font-normal">
+                          <p className="text-xs text-slate-400 italic font-normal">
                             No keywords matched. Please enter a detailed job description or configure your Gemini API Key in Vercel settings for dynamic role requirements generation.
                           </p>
                         ) : (
-                          <p className="text-xs text-teal-400 italic font-semibold">No missing keywords! You have a full match.</p>
+                          <p className="text-xs text-[#008080] italic font-semibold">No missing keywords! You have a full match.</p>
                         )
                       )}
                     </div>
@@ -1099,29 +1099,29 @@ export default function Home() {
 
                   {/* ATS Formatting Audit Checklist */}
                   <div className="flex flex-col gap-3">
-                    <h3 className="text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                      <ListChecks className="h-3.5 w-3.5 text-teal-400" />
+                    <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <ListChecks className="h-3.5 w-3.5 text-[#008080]" />
                       ATS Readability Checklist ({formattingIssues.length} warnings)
                     </h3>
                     
-                    <div className="flex flex-col gap-3 p-4 rounded-lg bg-[#0E1017] border border-white/5">
+                    <div className="flex flex-col gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200">
                       
                       {/* Checklist items */}
-                      <div className="grid grid-cols-2 gap-2 pb-3.5 border-b border-white/5">
-                        <div className="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
-                          {hasEmail ? <Check className="h-3.5 w-3.5 text-teal-400 font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
+                      <div className="grid grid-cols-2 gap-2 pb-3.5 border-b border-slate-200/60">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {hasEmail ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
                           <span>Email address</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
-                          {hasPhone ? <Check className="h-3.5 w-3.5 text-teal-400 font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {hasPhone ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
                           <span>Phone number</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
-                          {hasLinkedIn ? <Check className="h-3.5 w-3.5 text-teal-400 font-black" /> : <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />}
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {hasLinkedIn ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />}
                           <span>LinkedIn Link</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
-                          {sectionsFound.includes('experience') ? <Check className="h-3.5 w-3.5 text-teal-400 font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                          {sectionsFound.includes('experience') ? <Check className="h-3.5 w-3.5 text-[#008080] font-black" /> : <X className="h-3.5 w-3.5 text-rose-500 font-bold" />}
                           <span>Experience section</span>
                         </div>
                       </div>
@@ -1130,20 +1130,20 @@ export default function Home() {
                       <div className="flex flex-col gap-2.5 max-h-[180px] overflow-y-auto pr-1">
                         {formattingIssues.length > 0 ? (
                           formattingIssues.map((issue, idx) => (
-                            <div key={idx} className="flex gap-2 text-xs text-slate-400 bg-[#151821] rounded border border-white/5 p-2.5 shadow-sm">
+                            <div key={idx} className="flex gap-2 text-xs text-slate-600 bg-white rounded border border-slate-200 p-2.5 shadow-sm">
                               {issue.severity === 'error' ? (
                                 <X className="h-4 w-4 text-rose-500 shrink-0 mt-0.5" />
                               ) : (
                                 <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
                               )}
                               <div className="flex flex-col gap-0.5">
-                                <span className="font-bold text-slate-200 text-[11px]">{issue.issue}</span>
-                                <p className="text-[10px] text-slate-400 leading-normal font-normal">{issue.fix}</p>
+                                <span className="font-bold text-slate-900 text-[11px]">{issue.issue}</span>
+                                <p className="text-[10px] text-slate-500 leading-normal font-normal">{issue.fix}</p>
                               </div>
                             </div>
                           ))
                         ) : (
-                          <div className="text-xs text-teal-400 italic flex items-center gap-1.5 font-medium">
+                          <div className="text-xs text-[#008080] italic flex items-center gap-1.5 font-medium">
                             <CheckCircle2 className="h-4 w-4" />
                             <span>No formatting warnings found! Document is fully ATS-readable.</span>
                           </div>
@@ -1154,21 +1154,21 @@ export default function Home() {
 
                   {/* Tailored Bullet Point Suggestions */}
                   <div className="flex flex-col gap-3">
-                    <h3 className="text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                      <Sparkles className="h-3.5 w-3.5 text-teal-400" />
+                    <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="h-3.5 w-3.5 text-[#008080]" />
                       Tailored Bullet Point Suggestions
                     </h3>
 
                     <div className="flex flex-col gap-4 max-h-[350px] overflow-y-auto pr-1">
                       {bullets.map((bullet) => (
-                        <div key={bullet.id} className="rounded-lg border border-white/5 bg-[#151821] p-4.5 flex flex-col gap-3 hover:border-white/10 transition-all">
+                        <div key={bullet.id} className="rounded-lg border border-slate-200 bg-white p-4.5 flex flex-col gap-3 hover:border-slate-300 transition-all">
                           
                           {/* Original line */}
                           <div className="flex flex-col gap-1">
-                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">
+                            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
                               Original
                             </span>
-                            <p className="text-xs text-slate-400 pl-2.5 border-l border-rose-950/50 strike-through line-through opacity-85">
+                            <p className="text-xs text-slate-500 pl-2.5 border-l border-rose-200 strike-through line-through opacity-85">
                               {bullet.original}
                             </p>
                           </div>
@@ -1176,17 +1176,17 @@ export default function Home() {
                           {/* Tailored suggestion */}
                           <div className="flex flex-col gap-1.5 mt-1">
                             <div className="flex items-center justify-between">
-                              <span className="text-[9px] font-bold text-teal-400 uppercase tracking-wider flex items-center gap-1">
-                                <Sparkles className="h-3 w-3 text-teal-400" /> Tailored AI Rewrite
+                              <span className="text-[9px] font-bold text-[#008080] uppercase tracking-wider flex items-center gap-1">
+                                <Sparkles className="h-3 w-3 text-[#008080]" /> Tailored AI Rewrite
                               </span>
                               <button
                                 onClick={() => handleCopy(bullet.id, bullet.tailored)}
-                                className="flex items-center gap-1 px-2.5 py-1 rounded border border-white/5 bg-[#0E1017] hover:bg-[#1C1F2E] hover:text-white text-[10px] text-slate-300 transition-all cursor-pointer font-medium"
+                                className="flex items-center gap-1 px-2.5 py-1 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 hover:text-slate-900 text-[10px] text-slate-600 transition-all cursor-pointer font-medium"
                               >
                                 {copiedId === bullet.id ? (
                                   <>
-                                    <Check className="h-3 w-3 text-teal-400" />
-                                    <span className="text-teal-400">Copied</span>
+                                    <Check className="h-3 w-3 text-[#008080]" />
+                                    <span className="text-[#008080]">Copied</span>
                                   </>
                                 ) : (
                                   <>
@@ -1196,14 +1196,14 @@ export default function Home() {
                                 )}
                               </button>
                             </div>
-                            <p className="text-xs font-semibold text-slate-200 pl-2.5 border-l-2 border-teal-500">
+                            <p className="text-xs font-semibold text-slate-800 pl-2.5 border-l-2 border-[#008080]">
                               {bullet.tailored}
                             </p>
                           </div>
 
                           {/* Rationale explanation */}
-                          <div className="text-[11px] text-slate-400 bg-[#0E1017] rounded-md p-2.5 border border-white/5">
-                            <span className="font-semibold text-white">Why:</span> {bullet.reason}
+                          <div className="text-[11px] text-slate-600 bg-slate-50 rounded-md p-2.5 border border-slate-200">
+                            <span className="font-semibold text-slate-900">Why:</span> {bullet.reason}
                           </div>
                         </div>
                       ))}
@@ -1218,9 +1218,9 @@ export default function Home() {
         </div>
 
         {/* SEO FAQ & ATS Guidelines Section */}
-        <section className="mt-12 border-t border-white/5 pt-8">
+        <section className="mt-12 border-t border-[#1A1A1A]/10 pt-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-lg font-bold text-white text-center tracking-tight mb-1">
+            <h2 className="text-lg font-bold text-[#1A1A1A] text-center tracking-tight mb-1">
               Frequently Asked Questions &amp; ATS Guidelines
             </h2>
             <p className="text-xs text-slate-500 text-center mb-6">
@@ -1246,18 +1246,18 @@ export default function Home() {
                   a: "A standard PDF or Microsoft Word (.docx) file is best. Always ensure your PDF has selectable, highlightable text (not scanned as an image). Plain text (.txt) files are also 100% readable but lack visual styling for human reviewers."
                 }
               ].map((faq, index) => (
-                <div key={index} className="rounded-lg border border-white/5 bg-[#151821] overflow-hidden transition-all duration-200 hover:border-white/10">
+                <div key={index} className="rounded-lg border border-[#1A1A1A]/10 bg-white overflow-hidden transition-all duration-200 hover:border-[#1A1A1A]/20 shadow-sm">
                   <button
                     onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                    className="w-full flex items-center justify-between p-4 text-left text-xs sm:text-sm font-bold text-slate-200 hover:bg-[#1C1F2E] transition-colors cursor-pointer"
+                    className="w-full flex items-center justify-between p-4 text-left text-xs sm:text-sm font-bold text-[#1A1A1A] hover:bg-slate-50 transition-colors cursor-pointer"
                   >
                     <span>{faq.q}</span>
-                    <span className="text-teal-400 font-extrabold text-base leading-none ml-4 select-none">
+                    <span className="text-[#008080] font-extrabold text-base leading-none ml-4 select-none">
                       {expandedFaq === index ? '−' : '+'}
                     </span>
                   </button>
                   {expandedFaq === index && (
-                    <div className="p-4 pt-0 text-xs text-slate-400 leading-relaxed border-t border-white/5 bg-[#0E1017] animate-fadeIn">
+                    <div className="p-4 pt-0 text-xs text-slate-500 leading-relaxed border-t border-slate-100 bg-slate-50 animate-fadeIn">
                       {faq.a}
                     </div>
                   )}
@@ -1269,12 +1269,12 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-white/5 py-6 bg-[#0E1017] mt-auto">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <footer className="w-full border-t border-[#1A1A1A]/10 py-6 bg-[#FAF7F2] mt-auto">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p>&copy; 2026 InterviewReady. Built for recruitment engineering.</p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="hover:underline hover:text-white transition-colors cursor-pointer">Privacy Policy</Link>
-            <Link href="/terms" className="hover:underline hover:text-white transition-colors cursor-pointer">Terms of Service</Link>
+            <Link href="/privacy" className="hover:underline hover:text-[#1A1A1A] transition-colors cursor-pointer">Privacy Policy</Link>
+            <Link href="/terms" className="hover:underline hover:text-[#1A1A1A] transition-colors cursor-pointer">Terms of Service</Link>
           </div>
         </div>
       </footer>
