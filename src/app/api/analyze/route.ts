@@ -11,7 +11,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.GeminiAPIKey2 || process.env.GEMINI_API_KEY;
 
     // If API key is not configured, inform the client to fallback to local matching
     if (!apiKey) {
