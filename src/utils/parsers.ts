@@ -27,7 +27,17 @@ export const extractTextFromPdf = async (file: File): Promise<string> => {
   const pdfjsLib = (window as any).pdfjsLib;
   if (!pdfjsLib) throw new Error('PDF.js library is not available');
   
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  // Load the worker from a local Blob URL to bypass browser CORS / same-origin worker policies
+  try {
+    const workerUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    const response = await fetch(workerUrl);
+    const workerCode = await response.text();
+    const blob = new Blob([workerCode], { type: 'application/javascript' });
+    pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(blob);
+  } catch (err) {
+    console.warn('CORS worker fetch failed, falling back to direct CDN link:', err);
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
   
   const arrayBuffer = await file.arrayBuffer();
   const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
