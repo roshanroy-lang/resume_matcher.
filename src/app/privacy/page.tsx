@@ -69,7 +69,7 @@ export default function PrivacyPolicy() {
           <section className="space-y-2">
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">5. Legal Entity</h2>
             <p>
-              This website and tool are owned and operated by <strong>Roshan Roy</strong>. For legal inquiries or policy questions, please contact us through the official contact portal on our homepage dashboard.
+              This website and tool are owned and operated by <strong>Roshan Roy</strong>.
             </p>
           </section>
         </div>
