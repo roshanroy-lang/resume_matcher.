@@ -40,12 +40,13 @@ Instructions:
 3. Do not include placeholders like "[Insert Date]" or "[Company Name]". Instead, construct a realistic professional header and closing. If details are missing, write standard corporate headers.
 4. Output the result in standard markdown format inside the JSON response.`;
 
-    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
 
     const apiResponse = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey,
       },
       body: JSON.stringify({
         contents: [

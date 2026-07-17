@@ -36,12 +36,13 @@ Instructions:
 2. Mix the questions between technical, behavioral, and situational types.
 3. For each question, provide an "idealGuidelines" summary outlining what points, structures (e.g. STAR method), frameworks, or skills the candidate should ideally hit to score highly.`;
 
-    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
 
     const apiResponse = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey,
       },
       body: JSON.stringify({
         contents: [

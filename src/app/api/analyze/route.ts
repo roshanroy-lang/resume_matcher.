@@ -38,12 +38,13 @@ Rules for outputs:
 2. If the Job Description is very short (less than 12 words), set "isInferred" to true and dynamically infer the industry standard titles/requirements. Otherwise set "isInferred" to false and "inferredTitle" to an empty string.`;
 
     // Upgrade to gemini-2.0-flash
-    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
 
     const apiResponse = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey,
       },
       body: JSON.stringify({
         contents: [

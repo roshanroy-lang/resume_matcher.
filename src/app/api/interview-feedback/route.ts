@@ -39,12 +39,13 @@ Instructions:
 2. Provide feedback in markdown format outlining: What they did well, What was missing, and How to improve.
 3. Generate a strong "modelAnswer" tailored to this question that displays high impact and structure.`;
 
-    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
 
     const apiResponse = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey,
       },
       body: JSON.stringify({
         contents: [
