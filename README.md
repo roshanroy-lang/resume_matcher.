@@ -9,7 +9,7 @@
 
 ---
 
-## 🚀 Engineering Highlights & Technical Architecture
+##   🚀 Engineering Highlights & Technical Architecture
 
 This application was engineered with professional software standards, prioritizing performance, SEO/AISO discoverability, and system resilience.
 
