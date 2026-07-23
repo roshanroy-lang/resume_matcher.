@@ -88,7 +88,7 @@ npm run dev
 
 ---
 
-## 🌐 Production Deployment
+##   🌐 Production Deployment
 
 The project compiles with standalone output tracing optimized for hosting on **Vercel**:
 1. Log into Vercel and import the repository.
