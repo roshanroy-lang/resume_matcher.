@@ -36,7 +36,7 @@ graph TD
 ### 3. High-Performance Frontend Architecture
 * Built using **Next.js 16 (App Router)** and built-in static optimization rules.
 * Styled using **Tailwind CSS v4** utilizing HSL variables for a sleek, high-contrast teal light-mode dashboard.
-* Responsive UI animations including interactive animated SVG progress gauges, badge tag removals, dynamic tab structures, and copy-to-clipboard notifications.
+* Responsive UI animations including interactive animated SVG progress  gauges, badge tag removals, dynamic tab structures, and copy-to-clipboard  notifications.
 
 ---
 
